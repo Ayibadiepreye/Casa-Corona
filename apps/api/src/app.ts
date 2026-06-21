@@ -5,12 +5,12 @@ import cookieParser from "cookie-parser";
 import pinoHttp from "pino-http";
 import rateLimit from "express-rate-limit";
 import path from "path";
-import router from "./routes";
-import { logger } from "./lib/logger";
-import { env } from "./lib/env";
-import { errorHandler } from "./middlewares/errorHandler";
-import { notFound } from "./lib/response";
-import { maintenanceGate } from "./middlewares/maintenance";
+import router from "./routes/index.js";
+import { logger } from "./lib/logger.js";
+import { env } from "./lib/env.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
+import { notFound } from "./lib/response.js";
+import { maintenanceGate } from "./middlewares/maintenance.js";
 
 export function createApp(): Express {
   const app: Express = express();
