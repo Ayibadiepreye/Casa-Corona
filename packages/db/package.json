@@ -1,0 +1,36 @@
+{
+  "name": "@casa-corona/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema/index.ts"
+  },
+  "scripts": {
+    "db:generate": "drizzle-kit generate --config ../../drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config ../../drizzle.config.ts",
+    "db:push": "drizzle-kit push --config ../../drizzle.config.ts",
+    "db:studio": "drizzle-kit studio --config ../../drizzle.config.ts",
+    "db:seed": "tsx src/seed.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --build"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "drizzle-orm": "catalog:",
+    "drizzle-zod": "^0.8.3",
+    "pg": "^8.20.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "@types/node": "catalog:",
+    "@types/pg": "^8.20.0",
+    "dotenv": "^16.4.7",
+    "drizzle-kit": "^0.31.10",
+    "pg": "^8.20.0",
+    "tsx": "catalog:",
+    "typescript": "~5.9.3"
+  }
+}

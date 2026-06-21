@@ -1,0 +1,25 @@
+{
+  "name": "casa-corona",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "preinstall": "node -e \"if(process.env.npm_config_user_agent && !process.env.npm_config_user_agent.startsWith('pnpm')) { console.error('Use pnpm'); process.exit(1); }\"",
+    "dev:web": "pnpm --filter web dev",
+    "dev:api": "pnpm --filter api dev",
+    "build": "pnpm -r --if-present run build",
+    "typecheck": "tsc --build && pnpm -r --if-present run typecheck",
+    "db:generate": "drizzle-kit generate --config packages/db/drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config packages/db/drizzle.config.ts",
+    "db:push": "drizzle-kit push --config packages/db/drizzle.config.ts",
+    "db:studio": "drizzle-kit studio --config packages/db/drizzle.config.ts",
+    "db:seed": "pnpm --filter db run db:seed"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.10",
+    "prettier": "^3.8.3",
+    "typescript": "~5.9.3"
+  },
+  "dependencies": {
+    "postgres": "^3.4.9"
+  }
+}
