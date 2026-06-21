@@ -3,8 +3,8 @@ import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
-import * as schema from "./schema";
-import * as relations from "./relations";
+import * as schema from "./schema/index.js";
+import * as relations from "./relations.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

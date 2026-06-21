@@ -4,8 +4,14 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./schema": "./src/schema/index.ts"
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.js"
+    },
+    "./schema": {
+      "types": "./src/schema/index.ts",
+      "import": "./dist/schema/index.js"
+    }
   },
   "scripts": {
     "db:generate": "drizzle-kit generate --config ../../drizzle.config.ts",
@@ -14,7 +20,7 @@
     "db:studio": "drizzle-kit studio --config ../../drizzle.config.ts",
     "db:seed": "tsx src/seed.ts",
     "typecheck": "tsc --noEmit",
-    "build": "tsc --build"
+    "build": "node build.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
@@ -29,6 +35,8 @@
     "@types/pg": "^8.20.0",
     "dotenv": "^16.4.7",
     "drizzle-kit": "^0.31.10",
+    "esbuild": "^0.24.2",
+    "glob": "^11.0.0",
     "pg": "^8.20.0",
     "tsx": "catalog:",
     "typescript": "~5.9.3"

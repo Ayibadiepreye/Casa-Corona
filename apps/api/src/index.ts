@@ -1,14 +1,14 @@
 import http from "http";
-import { createApp } from "./app.js.js";
-import { logger } from "./lib/logger.js.js";
-import { env } from "./lib/env.js.js";
-import { initSocket } from "./lib/socket.js.js";
-import { setupChatGateway } from "./realtime/chat.gateway.js.js";
-import { setupNotificationGateway } from "./realtime/notification.gateway.js.js";
-import { startMessageCleanupCron } from "./jobs/message-cleanup.js.js";
-import { startSubscriptionCron } from "./jobs/subscription-cron.js.js";
-import { startNotificationCleanupCron } from "./jobs/notification-cleanup.js.js";
-import { startCommissionCron } from "./jobs/commission-cron.js.js";
+import { createApp } from "./app.js";
+import { logger } from "./lib/logger.js";
+import { env } from "./lib/env.js";
+import { initSocket } from "./lib/socket.js";
+import { setupChatGateway } from "./realtime/chat.gateway.js";
+import { setupNotificationGateway } from "./realtime/notification.gateway.js";
+import { startMessageCleanupCron } from "./jobs/message-cleanup.js";
+import { startSubscriptionCron } from "./jobs/subscription-cron.js";
+import { startNotificationCleanupCron } from "./jobs/notification-cleanup.js";
+import { startCommissionCron } from "./jobs/commission-cron.js";
 
 const app = createApp();
 const server = http.createServer(app);

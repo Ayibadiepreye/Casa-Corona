@@ -6,7 +6,7 @@
     "preinstall": "node -e \"if(process.env.npm_config_user_agent && !process.env.npm_config_user_agent.startsWith('pnpm')) { console.error('Use pnpm'); process.exit(1); }\"",
     "dev:web": "pnpm --filter web dev",
     "dev:api": "pnpm --filter api dev",
-    "build": "pnpm -r --if-present run build",
+    "build": "pnpm --filter @casa-corona/db build && pnpm --filter @casa-corona/api-zod build && pnpm --filter @casa-corona/api build && pnpm --filter @casa-corona/web build",
     "typecheck": "tsc --build && pnpm -r --if-present run typecheck",
     "db:generate": "drizzle-kit generate --config packages/db/drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config packages/db/drizzle.config.ts",
