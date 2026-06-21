@@ -1,7 +1,7 @@
 
 import { Request, Response, NextFunction } from "express";
-import { ok } from "../../lib/response";
-import * as categoryService from "./category.service";
+import { ok } from "../../lib/response.js";
+import * as categoryService from "./category.service.js";
 
 export async function listCategories(req: Request, res: Response, next: NextFunction) {
   try {

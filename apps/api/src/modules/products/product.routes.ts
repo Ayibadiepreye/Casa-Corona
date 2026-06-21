@@ -1,9 +1,9 @@
 
 import { Router } from "express";
-import { requireAuth } from "../../middlewares/requireAuth";
-import { validate } from "../../middlewares/validate";
-import { createProductSchema, updateProductSchema } from "./product.schema";
-import * as productController from "./product.controller";
+import { requireAuth } from "../../middlewares/requireAuth.js";
+import { validate } from "../../middlewares/validate.js";
+import { createProductSchema, updateProductSchema } from "./product.schema.js";
+import * as productController from "./product.controller.js";
 
 const router = Router();
 

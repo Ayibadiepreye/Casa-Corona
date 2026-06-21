@@ -1,9 +1,9 @@
 
 import { Server } from "socket.io";
 import http from "http";
-import { verifyAccessToken } from "./jwt";
-import { env } from "./env";
-import { logger } from "./logger";
+import { verifyAccessToken } from "./jwt.js";
+import { env } from "./env.js";
+import { logger } from "./logger.js";
 
 let io: Server;
 

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { UnauthorizedError } from "../lib/errors";
-import { verifyAccessToken } from "../lib/jwt";
-import { isDenied } from "../modules/auth/auth.service";
+import { UnauthorizedError } from "../lib/errors.js";
+import { verifyAccessToken } from "../lib/jwt.js";
+import { isDenied } from "../modules/auth/auth.service.js";
 
 export interface AuthRequest extends Request {
   user?: {

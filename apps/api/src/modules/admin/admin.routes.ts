@@ -1,9 +1,9 @@
 
 import { Router } from "express";
-import * as adminController from "./admin.controller";
-import * as settingsController from "../settings/settings.controller";
-import { requireAuth } from "../../middlewares/requireAuth";
-import { requireRole } from "../../middlewares/requireRole";
+import * as adminController from "./admin.controller.js";
+import * as settingsController from "../settings/settings.controller.js";
+import { requireAuth } from "../../middlewares/requireAuth.js";
+import { requireRole } from "../../middlewares/requireRole.js";
 
 const router = Router();
 

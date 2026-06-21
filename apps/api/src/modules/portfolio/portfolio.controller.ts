@@ -1,9 +1,9 @@
 
 import { Request, Response, NextFunction } from "express";
-import { ok, created } from "../../lib/response";
-import { AuthRequest } from "../../middlewares/requireAuth";
-import * as portfolioService from "./portfolio.service";
-import { createPortfolioSchema, updatePortfolioSchema } from "./portfolio.schema";
+import { ok, created } from "../../lib/response.js";
+import { AuthRequest } from "../../middlewares/requireAuth.js";
+import * as portfolioService from "./portfolio.service.js";
+import { createPortfolioSchema, updatePortfolioSchema } from "./portfolio.schema.js";
 
 export async function addPortfolioShot(req: AuthRequest, res: Response, next: NextFunction) {
   try {

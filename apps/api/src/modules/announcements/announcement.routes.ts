@@ -1,11 +1,11 @@
 import { Router, type Request, type Response, type NextFunction } from "express";
 import { z } from "zod";
 import { db, usersTable, vendorsTable, notificationsTable } from "@casa-corona/db";
-import { requireAuth } from "../../middlewares/requireAuth";
-import { requireRole } from "../../middlewares/requireRole";
-import { ok, created, badRequest } from "../../lib/response";
-import { sendEmail } from "../../lib/email";
-import { env } from "../../lib/env";
+import { requireAuth } from "../../middlewares/requireAuth.js";
+import { requireRole } from "../../middlewares/requireRole.js";
+import { ok, created, badRequest } from "../../lib/response.js";
+import { sendEmail } from "../../lib/email.js";
+import { env } from "../../lib/env.js";
 
 const router: Router = Router();
 

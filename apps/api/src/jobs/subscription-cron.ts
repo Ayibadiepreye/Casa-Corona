@@ -1,9 +1,9 @@
 import cron from "node-cron";
-import { logger } from "../lib/logger";
+import { logger } from "../lib/logger.js";
 import { db } from "@casa-corona/db";
 import { subscriptionsTable, vendorsTable, notificationsTable } from "@casa-corona/db";
 import { and, eq, isNotNull, lt, gte, isNull } from "drizzle-orm";
-import { sendEmail } from "../lib/email";
+import { sendEmail } from "../lib/email.js";
 
 /**
  * Runs hourly. Finds subscriptions expiring in [targetDays] days and:

@@ -1,10 +1,10 @@
 
 import { Router, Response, NextFunction } from "express";
-import { requireAuth } from "../../middlewares/requireAuth";
+import { requireAuth } from "../../middlewares/requireAuth.js";
 import { db, usersTable, auditLogsTable } from "@casa-corona/db";
 import { eq } from "drizzle-orm";
-import { AuthRequest } from "../../middlewares/requireAuth";
-import { ok } from "../../lib/response";
+import { AuthRequest } from "../../middlewares/requireAuth.js";
+import { ok } from "../../lib/response.js";
 
 const router = Router();
 

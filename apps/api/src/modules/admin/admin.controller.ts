@@ -1,8 +1,8 @@
 
 import { Response, NextFunction } from "express";
-import * as adminService from "./admin.service";
-import { AuthRequest } from "../../middlewares/requireAuth";
-import { ok, created } from "../../lib/response";
+import * as adminService from "./admin.service.js";
+import { AuthRequest } from "../../middlewares/requireAuth.js";
+import { ok, created } from "../../lib/response.js";
 
 export const getPlatformStats = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {

@@ -1,8 +1,8 @@
 
 import { Response, NextFunction } from "express";
-import * as settingsService from "./settings.service";
-import { AuthRequest } from "../../middlewares/requireAuth";
-import { ok } from "../../lib/response";
+import * as settingsService from "./settings.service.js";
+import { AuthRequest } from "../../middlewares/requireAuth.js";
+import { ok } from "../../lib/response.js";
 
 export const getPublicSettings = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {

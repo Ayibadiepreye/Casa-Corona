@@ -10,7 +10,9 @@
     "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "node",
-    "strict": true
+    "strict": true,
+    "allowImportingTsExtensions": false,
+    "verbatimModuleSyntax": false
   },
   "include": ["src"],
   "references": [

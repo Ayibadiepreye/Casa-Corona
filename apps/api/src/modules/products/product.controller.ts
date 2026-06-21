@@ -1,9 +1,9 @@
 
 import { Request, Response, NextFunction } from "express";
-import { ok, created } from "../../lib/response";
-import { AuthRequest } from "../../middlewares/requireAuth";
-import * as productService from "./product.service";
-import { createProductSchema, updateProductSchema } from "./product.schema";
+import { ok, created } from "../../lib/response.js";
+import { AuthRequest } from "../../middlewares/requireAuth.js";
+import * as productService from "./product.service.js";
+import { createProductSchema, updateProductSchema } from "./product.schema.js";
 
 export async function createProduct(req: AuthRequest, res: Response, next: NextFunction) {
   try {

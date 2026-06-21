@@ -1,9 +1,9 @@
 
 import { db, conversationsTable, messagesTable, usersTable, vendorsTable, notificationsTable } from "@casa-corona/db";
 import { eq, and, desc, gt } from "drizzle-orm";
-import { createNotification } from "../notifications/notification.service";
-import { NotFoundError, ForbiddenError } from "../../lib/errors";
-import { sendNewMessage } from "../../lib/email";
+import { createNotification } from "../notifications/notification.service.js";
+import { NotFoundError, ForbiddenError } from "../../lib/errors.js";
+import { sendNewMessage } from "../../lib/email.js";
 
 export async function findOrCreateConversation(customerId: string, vendorId: string) {
   let [conversation] = await db.select().from(conversationsTable).where(and(eq(conversationsTable.customerId, customerId), eq(conversationsTable.vendorId, vendorId)));

@@ -1,7 +1,7 @@
 
 import type { Socket } from "socket.io";
-import { getIO } from "../lib/socket";
-import * as conversationService from "../modules/conversations/conversation.service";
+import { getIO } from "../lib/socket.js";
+import * as conversationService from "../modules/conversations/conversation.service.js";
 
 export function setupChatGateway(socket: Socket) {
   socket.on("conversation:join", async ({ conversationId }: { conversationId: string }) => {

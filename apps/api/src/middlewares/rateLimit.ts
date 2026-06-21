@@ -34,7 +34,7 @@ const FAILED_ATTEMPT_LIMIT = 5;
 const FAILED_ATTEMPT_WINDOW_MS = 15 * 60 * 1000; // 15 min
 const LOCKOUT_DURATION_MS = 30 * 60 * 1000; // 30 min
 
-import { get, setEx, del } from "../lib/redis";
+import { get, setEx, del } from "../lib/redis.js";
 
 interface FailedRecord {
   count: number;

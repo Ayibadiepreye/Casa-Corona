@@ -1,17 +1,17 @@
 
 import { Router } from "express";
-import { requireAuth } from "../../middlewares/requireAuth";
-import { requireRole } from "../../middlewares/requireRole";
-import { validate } from "../../middlewares/validate";
+import { requireAuth } from "../../middlewares/requireAuth.js";
+import { requireRole } from "../../middlewares/requireRole.js";
+import { validate } from "../../middlewares/validate.js";
 import {
   createVendorSchema,
   updateVendorSchema,
   vendorQuerySchema,
-} from "./vendor.schema";
-import { upload } from "../../lib/upload";
-import * as vendorController from "./vendor.controller";
-import * as savedController from "../saved/saved.controller";
-import * as followController from "../follows/follow.controller";
+} from "./vendor.schema.js";
+import { upload } from "../../lib/upload.js";
+import * as vendorController from "./vendor.controller.js";
+import * as savedController from "../saved/saved.controller.js";
+import * as followController from "../follows/follow.controller.js";
 
 const router = Router();
 

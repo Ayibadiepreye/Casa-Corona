@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import * as userService from './user.service';
-import { env } from "../../lib/env";
-import { ok, created } from "../../lib/response";
-import { AuthRequest } from '../../middlewares/requireAuth';
+import * as userService from './user.service.js';
+import { env } from "../../lib/env.js";
+import { ok, created } from "../../lib/response.js";
+import { AuthRequest } from '../../middlewares/requireAuth.js';
 
 export async function getMe(req: AuthRequest, res: Response, next: NextFunction) {
   try {

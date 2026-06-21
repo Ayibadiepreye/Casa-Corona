@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import { env } from "../lib/env";
+import { env } from "../lib/env.js";
 
 /**
  * If MAINTENANCE_MODE=true, return 503 for all non-admin routes.

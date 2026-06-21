@@ -1,7 +1,7 @@
 
 import { db, categoriesTable, vendorsTable } from "@casa-corona/db";
 import { eq, and, desc, sql, asc, isNull } from "drizzle-orm";
-import { NotFoundError } from "../../lib/errors";
+import { NotFoundError } from "../../lib/errors.js";
 
 export async function listCategories() {
   const categories = await db

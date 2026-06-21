@@ -1,7 +1,7 @@
 import { db, notificationsTable } from "@casa-corona/db";
 import { lt } from "drizzle-orm";
 import cron from "node-cron";
-import { logger } from "../lib/logger";
+import { logger } from "../lib/logger.js";
 
 /**
  * Auto-delete notifications older than 48 hours.

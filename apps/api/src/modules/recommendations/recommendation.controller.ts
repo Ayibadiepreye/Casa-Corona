@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { AuthRequest } from "../../middlewares/requireAuth";
-import * as recommendationService from "./recommendation.service";
-import { ok } from "../../lib/response";
+import { AuthRequest } from "../../middlewares/requireAuth.js";
+import * as recommendationService from "./recommendation.service.js";
+import { ok } from "../../lib/response.js";
 
 export async function getForYou(req: AuthRequest, res: Response, next: NextFunction) {
   try {

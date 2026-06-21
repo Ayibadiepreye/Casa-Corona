@@ -1,7 +1,7 @@
 import { Router, type IRouter } from "express";
 import { z } from "zod";
-import { requireAuth } from "../../middlewares/requireAuth";
-import { ok, notFound, forbidden } from "../../lib/response";
+import { requireAuth } from "../../middlewares/requireAuth.js";
+import { ok, notFound, forbidden } from "../../lib/response.js";
 import { db } from "@casa-corona/db";
 import { notificationsTable } from "@casa-corona/db";
 import { and, eq, desc } from "drizzle-orm";

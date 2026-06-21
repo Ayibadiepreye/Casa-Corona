@@ -1,9 +1,9 @@
 
 import { db, productsTable, vendorsTable } from "@casa-corona/db";
 import { eq } from "drizzle-orm";
-import { NotFoundError, UnauthorizedError } from "../../lib/errors";
+import { NotFoundError, UnauthorizedError } from "../../lib/errors.js";
 import { z } from "zod";
-import { createProductSchema, updateProductSchema } from "./product.schema";
+import { createProductSchema, updateProductSchema } from "./product.schema.js";
 
 export async function createProduct(
   userId: string,

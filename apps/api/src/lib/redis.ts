@@ -1,5 +1,5 @@
-import { env } from "./env";
-import { logger } from "./logger";
+import { env } from "./env.js";
+import { logger } from "./logger.js";
 import Redis from "ioredis";
 
 let redis: Redis | null = null;

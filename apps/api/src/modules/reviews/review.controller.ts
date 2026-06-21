@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { AuthRequest } from "../../middlewares/requireAuth";
-import * as reviewService from "./review.service";
-import { ok, created } from "../../lib/response";
-import { createReviewSchema, updateReviewSchema, reviewQuerySchema } from "./review.schema";
-import { requireRole } from "../../middlewares/requireRole";
+import { AuthRequest } from "../../middlewares/requireAuth.js";
+import * as reviewService from "./review.service.js";
+import { ok, created } from "../../lib/response.js";
+import { createReviewSchema, updateReviewSchema, reviewQuerySchema } from "./review.schema.js";
+import { requireRole } from "../../middlewares/requireRole.js";
 import { z } from "zod";
 
 export async function createReview(req: AuthRequest, res: Response, next: NextFunction) {

@@ -1,9 +1,9 @@
 
 import { db, usersTable, vendorsTable, categoriesTable, announcementsTable, faqsTable, auditLogsTable, loginHistoryTable, platformSettingsTable, bookingsTable, reviewsTable, paymentsTable } from "@casa-corona/db";
 import { eq, and, ilike, desc, gt, gte, or, isNull, isNotNull, count, inArray } from "drizzle-orm";
-import { signImpersonationToken } from "../../lib/jwt";
+import { signImpersonationToken } from "../../lib/jwt.js";
 import Papa from "papaparse";
-import { ConflictError } from "../../lib/errors";
+import { ConflictError } from "../../lib/errors.js";
 
 export async function getPlatformStats() {
   const [usersCount] = await db.select({ count: count() }).from(usersTable);

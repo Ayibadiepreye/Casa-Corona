@@ -11,10 +11,10 @@ import {
   vendorViewsTable,
 } from "@casa-corona/db";
 import { eq, and, ilike, desc, asc, or, SQL, sql, isNull } from "drizzle-orm";
-import { ConflictError, NotFoundError, UnauthorizedError } from "../../lib/errors";
+import { ConflictError, NotFoundError, UnauthorizedError } from "../../lib/errors.js";
 import { z } from "zod";
-import { createVendorSchema, vendorQuerySchema } from "./vendor.schema";
-import { uploadImage } from "../../lib/cloudinary";
+import { createVendorSchema, vendorQuerySchema } from "./vendor.schema.js";
+import { uploadImage } from "../../lib/cloudinary.js";
 
 function slugify(text: string) {
   return text

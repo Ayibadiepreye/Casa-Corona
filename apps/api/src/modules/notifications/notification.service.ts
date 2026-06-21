@@ -1,7 +1,7 @@
 
 import { db, notificationsTable } from "@casa-corona/db";
 import { eq, and, desc } from "drizzle-orm";
-import { getIO } from "../../lib/socket";
+import { getIO } from "../../lib/socket.js";
 
 export async function createNotification(userId: string, data: any) {
   const [notification] = await db.insert(notificationsTable).values({

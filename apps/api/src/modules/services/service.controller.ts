@@ -1,9 +1,9 @@
 
 import { Request, Response, NextFunction } from "express";
-import { ok, created } from "../../lib/response";
-import { AuthRequest } from "../../middlewares/requireAuth";
-import * as serviceService from "./service.service";
-import { createServiceSchema, updateServiceSchema } from "./service.schema";
+import { ok, created } from "../../lib/response.js";
+import { AuthRequest } from "../../middlewares/requireAuth.js";
+import * as serviceService from "./service.service.js";
+import { createServiceSchema, updateServiceSchema } from "./service.schema.js";
 
 export async function createService(req: AuthRequest, res: Response, next: NextFunction) {
   try {

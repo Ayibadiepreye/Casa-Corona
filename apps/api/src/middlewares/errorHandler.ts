@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
-import { AppError, ConflictError } from "../lib/errors";
-import { logger } from "../lib/logger";
-import { env } from "../lib/env";
+import { AppError, ConflictError } from "../lib/errors.js";
+import { logger } from "../lib/logger.js";
+import { env } from "../lib/env.js";
 
 export function errorHandler(
   err: any,

@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { AuthRequest } from "../../middlewares/requireAuth";
-import * as bookingService from "./booking.service";
-import { ok, created } from "../../lib/response";
-import { createBookingSchema, updateBookingStatusSchema, bookingQuerySchema } from "./booking.schema";
+import { AuthRequest } from "../../middlewares/requireAuth.js";
+import * as bookingService from "./booking.service.js";
+import { ok, created } from "../../lib/response.js";
+import { createBookingSchema, updateBookingStatusSchema, bookingQuerySchema } from "./booking.schema.js";
 import { z } from "zod";
 
 export async function createBooking(req: AuthRequest, res: Response, next: NextFunction) {

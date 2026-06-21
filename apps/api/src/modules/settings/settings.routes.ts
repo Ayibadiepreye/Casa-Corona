@@ -1,8 +1,8 @@
 
 import { Router } from "express";
-import * as settingsController from "./settings.controller";
-import { requireAuth } from "../../middlewares/requireAuth";
-import { requireRole } from "../../middlewares/requireRole";
+import * as settingsController from "./settings.controller.js";
+import { requireAuth } from "../../middlewares/requireAuth.js";
+import { requireRole } from "../../middlewares/requireRole.js";
 
 const router = Router();
 

@@ -7,10 +7,10 @@ import {
   notificationsTable,
 } from "@casa-corona/db";
 import { eq, and, or, desc, gt, lt, SQL, sql } from "drizzle-orm";
-import { NotFoundError, ForbiddenError, BadRequestError } from "../../lib/errors";
-import { sendBookingConfirmation, sendBookingReceived } from "../../lib/email";
-import * as emailService from "../../lib/email";
-import { env } from "../../lib/env";
+import { NotFoundError, ForbiddenError, BadRequestError } from "../../lib/errors.js";
+import { sendBookingConfirmation, sendBookingReceived } from "../../lib/email.js";
+import * as emailService from "../../lib/email.js";
+import { env } from "../../lib/env.js";
 
 async function createNotification(
   userId: string,

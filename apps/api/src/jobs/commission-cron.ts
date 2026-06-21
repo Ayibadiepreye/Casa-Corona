@@ -1,8 +1,8 @@
 import { db, bookingsTable, vendorsTable, usersTable, paymentsTable, notificationsTable } from "@casa-corona/db";
 import { and, eq, gte, lte, sql } from "drizzle-orm";
 import cron from "node-cron";
-import { logger } from "../lib/logger";
-import { sendEmail } from "../lib/email";
+import { logger } from "../lib/logger.js";
+import { sendEmail } from "../lib/email.js";
 
 /**
  * 1st of every month: invoice all vendors for accumulated commission.

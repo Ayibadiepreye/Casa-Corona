@@ -1,5 +1,5 @@
 import { db, messagesTable } from "@casa-corona/db";
-import { logger } from "../lib/logger";
+import { logger } from "../lib/logger.js";
 import { and, lt, or, isNotNull, sql } from "drizzle-orm";
 import cron from "node-cron";
 

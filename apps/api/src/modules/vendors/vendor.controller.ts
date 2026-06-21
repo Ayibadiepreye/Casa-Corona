@@ -1,10 +1,10 @@
 
 import { Request, Response, NextFunction } from "express";
-import { ok, created } from "../../lib/response";
-import { AuthRequest } from "../../middlewares/requireAuth";
-import * as vendorService from "./vendor.service";
+import { ok, created } from "../../lib/response.js";
+import { AuthRequest } from "../../middlewares/requireAuth.js";
+import * as vendorService from "./vendor.service.js";
 import { z } from "zod";
-import { createVendorSchema, updateVendorSchema, vendorQuerySchema } from "./vendor.schema";
+import { createVendorSchema, updateVendorSchema, vendorQuerySchema } from "./vendor.schema.js";
 
 export async function listVendors(req: Request, res: Response, next: NextFunction) {
   try {

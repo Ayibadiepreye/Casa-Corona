@@ -1,7 +1,7 @@
 
 import { type Request, type Response, type NextFunction } from "express";
-import { ok, created, forbidden } from "../../lib/response";
-import * as conversationService from "./conversation.service";
+import { ok, created, forbidden } from "../../lib/response.js";
+import * as conversationService from "./conversation.service.js";
 
 export async function createConversation(req: Request, res: Response, next: NextFunction) {
   try {

@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { requireAuth } from "../../middlewares/requireAuth";
-import { requireRole } from "../../middlewares/requireRole";
-import { validate } from "../../middlewares/validate";
-import * as bookingController from "./booking.controller";
-import { createBookingSchema, updateBookingStatusSchema, bookingQuerySchema } from "./booking.schema";
+import { requireAuth } from "../../middlewares/requireAuth.js";
+import { requireRole } from "../../middlewares/requireRole.js";
+import { validate } from "../../middlewares/validate.js";
+import * as bookingController from "./booking.controller.js";
+import { createBookingSchema, updateBookingStatusSchema, bookingQuerySchema } from "./booking.schema.js";
 
 const router = Router();
 

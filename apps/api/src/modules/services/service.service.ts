@@ -1,9 +1,9 @@
 
 import { db, servicesTable, vendorsTable } from "@casa-corona/db";
 import { eq } from "drizzle-orm";
-import { NotFoundError, UnauthorizedError } from "../../lib/errors";
+import { NotFoundError, UnauthorizedError } from "../../lib/errors.js";
 import { z } from "zod";
-import { createServiceSchema, updateServiceSchema } from "./service.schema";
+import { createServiceSchema, updateServiceSchema } from "./service.schema.js";
 
 export async function createService(
   userId: string,

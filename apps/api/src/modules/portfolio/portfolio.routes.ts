@@ -1,10 +1,10 @@
 
 import { Router } from "express";
-import { requireAuth } from "../../middlewares/requireAuth";
-import { validate } from "../../middlewares/validate";
-import { createPortfolioSchema, updatePortfolioSchema } from "./portfolio.schema";
-import { upload } from "../../lib/upload";
-import * as portfolioController from "./portfolio.controller";
+import { requireAuth } from "../../middlewares/requireAuth.js";
+import { validate } from "../../middlewares/validate.js";
+import { createPortfolioSchema, updatePortfolioSchema } from "./portfolio.schema.js";
+import { upload } from "../../lib/upload.js";
+import * as portfolioController from "./portfolio.controller.js";
 
 const router = Router();
 

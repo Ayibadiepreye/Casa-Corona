@@ -1,10 +1,10 @@
 
 import { db, portfolioShotsTable, vendorsTable } from "@casa-corona/db";
 import { eq, desc, and, sql } from "drizzle-orm";
-import { NotFoundError, UnauthorizedError, ConflictError } from "../../lib/errors";
+import { NotFoundError, UnauthorizedError, ConflictError } from "../../lib/errors.js";
 import { z } from "zod";
-import { createPortfolioSchema, updatePortfolioSchema } from "./portfolio.schema";
-import { uploadImage, deleteImage } from "../../lib/cloudinary";
+import { createPortfolioSchema, updatePortfolioSchema } from "./portfolio.schema.js";
+import { uploadImage, deleteImage } from "../../lib/cloudinary.js";
 
 export async function addPortfolioShot(
   userId: string,

@@ -1,12 +1,12 @@
 import { db, usersTable, loginHistoryTable } from '@casa-corona/db';
-import { logger } from "../../lib/logger";
+import { logger } from "../../lib/logger.js";
 import { eq, and, gt } from 'drizzle-orm';
-import { hashPassword, comparePasswords } from '../../lib/password';
-import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../../lib/jwt';
-import { BadRequestError, ConflictError, NotFoundError, UnauthorizedError } from '../../lib/errors';
-import * as emailService from '../../lib/email';
-import * as redisService from '../../lib/redis';
-import { env } from '../../lib/env';
+import { hashPassword, comparePasswords } from '../../lib/password.js';
+import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../../lib/jwt.js';
+import { BadRequestError, ConflictError, NotFoundError, UnauthorizedError } from '../../lib/errors.js';
+import * as emailService from '../../lib/email.js';
+import * as redisService from '../../lib/redis.js';
+import { env } from '../../lib/env.js';
 import crypto from 'crypto';
 
 function generateOtp(): string {

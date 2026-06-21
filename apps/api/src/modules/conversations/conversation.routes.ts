@@ -1,9 +1,9 @@
 
 import { Router } from "express";
-import { requireAuth } from "../../middlewares/requireAuth";
-import { validate } from "../../middlewares/validate";
-import { createConversationSchema, sendMessageSchema } from "./conversation.schema";
-import * as conversationController from "./conversation.controller";
+import { requireAuth } from "../../middlewares/requireAuth.js";
+import { validate } from "../../middlewares/validate.js";
+import { createConversationSchema, sendMessageSchema } from "./conversation.schema.js";
+import * as conversationController from "./conversation.controller.js";
 
 const router = Router();
 

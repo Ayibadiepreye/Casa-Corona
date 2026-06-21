@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import * as authService from './auth.service';
-import { ok, created, badRequest } from '../../lib/response';
-import { env } from '../../lib/env';
-import { AuthRequest } from '../../middlewares/requireAuth';
-import { isAccountLocked, recordFailedLogin, clearFailedLogins } from '../../middlewares/rateLimit';
+import * as authService from './auth.service.js';
+import { ok, created, badRequest } from '../../lib/response.js';
+import { env } from '../../lib/env.js';
+import { AuthRequest } from '../../middlewares/requireAuth.js';
+import { isAccountLocked, recordFailedLogin, clearFailedLogins } from '../../middlewares/rateLimit.js';
 
 export async function signup(req: Request, res: Response, next: NextFunction) {
   try {

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { AuthRequest } from "../../middlewares/requireAuth";
-import * as savedService from "./saved.service";
-import { ok } from "../../lib/response";
+import { AuthRequest } from "../../middlewares/requireAuth.js";
+import * as savedService from "./saved.service.js";
+import { ok } from "../../lib/response.js";
 
 export async function getMySaved(req: AuthRequest, res: Response, next: NextFunction) {
   try {

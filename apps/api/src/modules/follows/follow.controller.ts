@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { AuthRequest } from "../../middlewares/requireAuth";
-import * as followService from "./follow.service";
-import { ok } from "../../lib/response";
+import { AuthRequest } from "../../middlewares/requireAuth.js";
+import * as followService from "./follow.service.js";
+import { ok } from "../../lib/response.js";
 
 export async function getMyFollows(req: AuthRequest, res: Response, next: NextFunction) {
   try {

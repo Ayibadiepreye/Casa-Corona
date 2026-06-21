@@ -1,7 +1,7 @@
 import { db, usersTable, vendorsTable, bookingsTable, reviewsTable, savedVendorsTable, followsTable, notificationsTable, InferSelectModel } from '@casa-corona/db';
 import { eq, and } from 'drizzle-orm';
-import { hashPassword, comparePasswords } from '../../lib/password';
-import { NotFoundError, UnauthorizedError } from '../../lib/errors';
+import { hashPassword, comparePasswords } from '../../lib/password.js';
+import { NotFoundError, UnauthorizedError } from '../../lib/errors.js';
 
 type User = InferSelectModel<typeof usersTable>;
 type SafeUser = Omit<User, 'passwordHash' | 'refreshToken' | 'resetToken'>;

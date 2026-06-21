@@ -1,9 +1,9 @@
 
 import { Router } from "express";
-import { requireAuth } from "../../middlewares/requireAuth";
-import { validate } from "../../middlewares/validate";
-import { createServiceSchema, updateServiceSchema } from "./service.schema";
-import * as serviceController from "./service.controller";
+import { requireAuth } from "../../middlewares/requireAuth.js";
+import { validate } from "../../middlewares/validate.js";
+import { createServiceSchema, updateServiceSchema } from "./service.schema.js";
+import * as serviceController from "./service.controller.js";
 
 const router = Router();
 

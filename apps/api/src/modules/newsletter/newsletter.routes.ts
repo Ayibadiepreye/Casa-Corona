@@ -2,8 +2,8 @@ import { Router, type Request, type Response, type NextFunction } from "express"
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { db, newsletterSubscribersTable } from "@casa-corona/db";
-import { ok, created, badRequest } from "../../lib/response";
-import { logger } from "../../lib/logger";
+import { ok, created, badRequest } from "../../lib/response.js";
+import { logger } from "../../lib/logger.js";
 
 const router = Router();
 

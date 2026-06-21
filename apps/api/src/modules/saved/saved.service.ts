@@ -1,6 +1,6 @@
 import { db, savedVendorsTable, vendorsTable } from "@casa-corona/db";
 import { eq, and, desc, sql } from "drizzle-orm";
-import { ForbiddenError } from "../../lib/errors";
+import { ForbiddenError } from "../../lib/errors.js";
 
 export async function getMySaved(userId: string, { page = 1, limit = 20 } = {}) {
   const offset = (page - 1) * limit;

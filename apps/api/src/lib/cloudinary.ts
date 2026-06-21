@@ -1,6 +1,6 @@
 
 import { v2 as cloudinary } from "cloudinary";
-import { env } from "./env";
+import { env } from "./env.js";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 

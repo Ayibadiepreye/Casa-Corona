@@ -1,12 +1,12 @@
 import { Router, type IRouter } from "express";
-import { logger } from "../../lib/logger";
+import { logger } from "../../lib/logger.js";
 import { z } from "zod";
-import { requireAuth } from "../../middlewares/requireAuth";
-import { requireRole } from "../../middlewares/requireRole";
-import { ok, badRequest, notFound, forbidden } from "../../lib/response";
+import { requireAuth } from "../../middlewares/requireAuth.js";
+import { requireRole } from "../../middlewares/requireRole.js";
+import { ok, badRequest, notFound, forbidden } from "../../lib/response.js";
 import { eq, and, asc, sql } from "drizzle-orm";
 import crypto from "crypto";
-import { env } from "../../lib/env";
+import { env } from "../../lib/env.js";
 import {
   db,
   subscriptionsTable,

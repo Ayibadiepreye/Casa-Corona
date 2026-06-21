@@ -1,6 +1,6 @@
 import { Response, NextFunction } from "express";
-import { AuthRequest } from "./requireAuth";
-import { ForbiddenError } from "../lib/errors";
+import { AuthRequest } from "./requireAuth.js";
+import { ForbiddenError } from "../lib/errors.js";
 
 export function requireRole(...roles: string[]) {
   return (req: AuthRequest, res: Response, next: NextFunction) => {

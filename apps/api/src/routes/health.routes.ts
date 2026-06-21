@@ -1,12 +1,12 @@
 import { Router, type IRouter, type Request } from "express";
-import { ok, forbidden } from "../lib/response";
+import { ok, forbidden } from "../lib/response.js";
 import { db } from "@casa-corona/db";
 import { sql } from "drizzle-orm";
-import { cleanupMessages } from "../jobs/message-cleanup";
-import { requireAuth, type AuthRequest } from "../middlewares/requireAuth";
-import { requireRole } from "../middlewares/requireRole";
-import { env } from "../lib/env";
-import { isRedisConnected } from "../lib/redis";
+import { cleanupMessages } from "../jobs/message-cleanup.js";
+import { requireAuth, type AuthRequest } from "../middlewares/requireAuth.js";
+import { requireRole } from "../middlewares/requireRole.js";
+import { env } from "../lib/env.js";
+import { isRedisConnected } from "../lib/redis.js";
 
 const router: IRouter = Router();
 const startTime = Date.now();

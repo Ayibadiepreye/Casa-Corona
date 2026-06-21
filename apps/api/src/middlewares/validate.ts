@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { ValidationError } from "../lib/errors";
+import { ValidationError } from "../lib/errors.js";
 
 interface Schemas {
   body?: z.ZodSchema;

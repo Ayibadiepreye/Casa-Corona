@@ -7,8 +7,8 @@ import {
   notificationsTable,
 } from "@casa-corona/db";
 import { eq, and, desc, sql, SQL } from "drizzle-orm";
-import { NotFoundError, ForbiddenError, BadRequestError } from "../../lib/errors";
-import { sendNewReview } from "../../lib/email";
+import { NotFoundError, ForbiddenError, BadRequestError } from "../../lib/errors.js";
+import { sendNewReview } from "../../lib/email.js";
 
 async function createNotification(
   userId: string,

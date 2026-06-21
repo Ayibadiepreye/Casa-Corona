@@ -1,11 +1,11 @@
 import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
-import { logger } from "../../lib/logger";
+import { logger } from "../../lib/logger.js";
 import multer from "multer";
 import path from "path";
 import fs from "fs/promises";
 import crypto from "crypto";
-import { requireAuth } from "../../middlewares/requireAuth";
-import { ok, badRequest } from "../../lib/response";
+import { requireAuth } from "../../middlewares/requireAuth.js";
+import { ok, badRequest } from "../../lib/response.js";
 import { v2 as cloudinary } from "cloudinary";
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(process.cwd(), "uploads");

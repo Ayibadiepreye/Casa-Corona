@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import * as searchService from "./search.service";
-import { ok } from "../../lib/response";
+import * as searchService from "./search.service.js";
+import { ok } from "../../lib/response.js";
 
 export async function searchVendors(req: Request, res: Response, next: NextFunction) {
   try {
