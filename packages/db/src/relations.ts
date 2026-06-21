@@ -18,7 +18,7 @@ import {
   auditLogsTable,
   loginHistoryTable,
   pushSubscriptionsTable,
-} from "./schema";
+} from "./schema/index.js";
 
 export const usersRelations = relations(usersTable, ({ one, many }) => ({
   vendor: one(vendorsTable, {

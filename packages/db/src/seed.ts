@@ -1,5 +1,5 @@
-import { db } from "./index";
-import { platformSettingsTable, categoriesTable } from "./schema";
+import { db } from "./index.js";
+import { platformSettingsTable, categoriesTable } from "./schema/index.js";
 
 async function seed() {
   console.log("Seeding platform settings...");
