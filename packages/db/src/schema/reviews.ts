@@ -1,9 +1,9 @@
 import { pgTable, uuid, text, boolean, integer, timestamp, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { InferSelectModel, InferInsertModel } from "drizzle-orm";
-import { usersTable } from "./users";
-import { vendorsTable } from "./vendors";
-import { bookingsTable } from "./bookings";
+import { usersTable } from "./users.js";
+import { vendorsTable } from "./vendors.js";
+import { bookingsTable } from "./bookings.js";
 
 export const reviewsTable = pgTable("reviews", {
   id: uuid("id").primaryKey().defaultRandom(),

@@ -1,8 +1,8 @@
 import { pgTable, uuid, text, boolean, integer, timestamp, pgEnum, jsonb, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { InferSelectModel, InferInsertModel } from "drizzle-orm";
-import { usersTable } from "./users";
-import { vendorsTable } from "./vendors";
+import { usersTable } from "./users.js";
+import { vendorsTable } from "./vendors.js";
 
 export const subscriptionPlanEnum = pgEnum("subscription_plan", ["monthly", "3month", "6month", "12month"]);
 export const subscriptionRecordStatusEnum = pgEnum("subscription_record_status", [

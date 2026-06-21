@@ -1,5 +1,5 @@
 import { pgTable, uuid, text, timestamp, integer, index } from "drizzle-orm/pg-core";
-import { vendorsTable } from "./vendors";
+import { vendorsTable } from "./vendors.js";
 
 /**
  * Tracks every profile view by day, so a vendor sees daily/weekly/monthly counts

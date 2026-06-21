@@ -1,9 +1,9 @@
 import { pgTable, uuid, text, integer, timestamp, pgEnum, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { InferSelectModel, InferInsertModel } from "drizzle-orm";
-import { usersTable } from "./users";
-import { vendorsTable } from "./vendors";
-import { servicesTable } from "./services";
+import { usersTable } from "./users.js";
+import { vendorsTable } from "./vendors.js";
+import { servicesTable } from "./services.js";
 
 export const bookingStatusEnum = pgEnum("booking_status", [
   "pending", "confirmed", "completed", "cancelled"

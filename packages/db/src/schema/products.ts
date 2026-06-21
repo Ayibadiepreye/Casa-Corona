@@ -1,7 +1,7 @@
 import { pgTable, uuid, text, boolean, integer, timestamp, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { InferSelectModel, InferInsertModel } from "drizzle-orm";
-import { vendorsTable } from "./vendors";
+import { vendorsTable } from "./vendors.js";
 
 export const productsTable = pgTable("products", {
   id: uuid("id").primaryKey().defaultRandom(),

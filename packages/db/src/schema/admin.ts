@@ -1,8 +1,8 @@
 import { pgTable, uuid, text, boolean, integer, timestamp, jsonb, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { InferSelectModel, InferInsertModel } from "drizzle-orm";
-import { usersTable } from "./users";
-import { vendorsTable } from "./vendors";
+import { usersTable } from "./users.js";
+import { vendorsTable } from "./vendors.js";
 
 export const auditLogsTable = pgTable("audit_logs", {
   id: uuid("id").primaryKey().defaultRandom(),

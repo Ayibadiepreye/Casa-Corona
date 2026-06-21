@@ -1,6 +1,6 @@
 import { pgTable, uuid, timestamp, primaryKey, index } from "drizzle-orm/pg-core";
-import { usersTable } from "./users";
-import { vendorsTable } from "./vendors";
+import { usersTable } from "./users.js";
+import { vendorsTable } from "./vendors.js";
 
 export const savedVendorsTable = pgTable("saved_vendors", {
   userId: uuid("user_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
