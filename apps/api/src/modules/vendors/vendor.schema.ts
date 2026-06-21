@@ -25,6 +25,8 @@ export const createVendorSchema = z.object({
   teamSize: z.string().optional(),
   hours: z.any().optional(),
   holidays: z.any().optional(),
+  logoUrl: z.string().url().optional(),
+  coverUrl: z.string().url().optional(),
 });
 
 export const updateVendorSchema = createVendorSchema.partial();

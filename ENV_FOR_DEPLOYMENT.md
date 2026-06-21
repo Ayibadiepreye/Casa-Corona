@@ -52,7 +52,10 @@ GOOGLE_CALLBACK_URL=https://your-backend-url.pxxl.app/api/v1/auth/google/callbac
 
 SESSION_SECRET=casa-corona-super-secret-session-key-2026-dev-only
 
-CORS_ORIGIN=https://your-frontend-url.vercel.app
+# CORS - IMPORTANT: Add ALL your frontend URLs (comma-separated, no spaces)
+# Include www and non-www versions, plus Vercel preview URLs if needed
+CORS_ORIGIN=https://www.casacorona.org,https://casacorona.org,https://casa-corona.vercel.app
+CORS_CREDENTIALS=true
 
 RATE_LIMIT_WINDOW_MS=900000
 RATE_LIMIT_MAX_REQUESTS=100
@@ -154,12 +157,12 @@ Node Version:    20.x
 4. Get your frontend URL (e.g., `casa-corona.vercel.app`)
 
 ### Step 3: Update Backend URLs
-1. Go back to Pxxl.app environment variables
-2. Update these variables with your Vercel URL:
-   - `FRONTEND_URL=https://casa-corona.vercel.app`
-   - `CORS_ORIGIN=https://casa-corona.vercel.app`
-   - `GOOGLE_CALLBACK_URL=https://casa-corona-api.pxxl.app/api/v1/auth/google/callback`
-3. Redeploy backend on Pxxl.app
+1. Go back to Render environment variables
+2. Update these variables with your actual frontend URLs:
+   - `FRONTEND_URL=https://www.casacorona.org`
+   - `CORS_ORIGIN=https://www.casacorona.org,https://casacorona.org,https://casa-corona.vercel.app`
+   - `GOOGLE_CALLBACK_URL=https://casa-corona.onrender.com/api/v1/auth/google/callback`
+3. **Redeploy backend** - Render will automatically redeploy when you save environment changes
 
 ---
 
