@@ -8,9 +8,11 @@ import { logger } from "./logger.js";
 let io: Server;
 
 export function initSocket(server: http.Server): Server {
+  const allowedOrigins = env.CORS_ORIGIN.split(",").map((o) => o.trim()).filter(Boolean);
+  
   io = new Server(server, {
     cors: {
-      origin: env.CORS_ORIGIN,
+      origin: allowedOrigins.includes("*") ? "*" : allowedOrigins,
       credentials: true,
     },
   });

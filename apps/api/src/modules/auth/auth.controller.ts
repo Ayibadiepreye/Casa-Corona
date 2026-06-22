@@ -150,8 +150,16 @@ export async function logout(req: AuthRequest, res: Response, next: NextFunction
     if (req.user) {
       await authService.logout(req.user.userId);
     }
-    res.clearCookie('access_token');
-    res.clearCookie('refresh_token');
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
+    res.clearCookie('refresh_token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
     ok(res, { success: true });
   } catch (e) {
     next(e);
@@ -197,8 +205,16 @@ export async function logoutAll(req: AuthRequest, res: Response, next: NextFunct
     if (req.user) {
       await authService.logoutAll(req.user.userId);
     }
-    res.clearCookie('access_token');
-    res.clearCookie('refresh_token');
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
+    res.clearCookie('refresh_token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
     ok(res, { success: true });
   } catch (e) {
     next(e);
