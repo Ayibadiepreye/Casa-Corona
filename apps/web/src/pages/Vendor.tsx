@@ -241,18 +241,27 @@ export default function Vendor() {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative -mt-24 md:-mt-32">
-        {/* Breadcrumb */}
-        <div className="hidden md:flex items-center gap-2 text-sm text-white/80 mb-6 drop-shadow-md">
-          <Link href="/" className="hover:text-white transition-colors">Home</Link>
-          <ChevronRight className="w-4 h-4" />
-          <Link href="/browse" className="hover:text-white transition-colors">Vendors</Link>
-          <ChevronRight className="w-4 h-4" />
-          <span className="font-medium text-white">{vendor.businessName}</span>
+        {/* Breadcrumb with back button on mobile */}
+        <div className="flex items-center gap-2 text-sm mb-4 sm:mb-6">
+          <button 
+            onClick={() => window.history.back()} 
+            className="md:hidden flex items-center gap-1 text-foreground/80 hover:text-primary transition-colors bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full border"
+          >
+            <ChevronRight className="w-4 h-4 rotate-180" />
+            Back
+          </button>
+          <div className="hidden md:flex items-center gap-2 text-white/80 drop-shadow-md">
+            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+            <ChevronRight className="w-4 h-4" />
+            <Link href="/browse" className="hover:text-white transition-colors">Vendors</Link>
+            <ChevronRight className="w-4 h-4" />
+            <span className="font-medium text-white">{vendor.businessName}</span>
+          </div>
         </div>
 
-        {/* Profile Header */}
-        <div className="bg-background/80 backdrop-blur-xl border shadow-lg rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start relative z-10">
-          <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-background overflow-hidden shrink-0 shadow-sm bg-background">
+        {/* Profile Header - Fully Adaptive Mobile */}
+        <div className="bg-background/80 backdrop-blur-xl border shadow-lg rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 items-start relative z-10">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border-4 border-background overflow-hidden shrink-0 shadow-sm bg-background">
             <img
               src={vendor.logoUrl || "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=200"}
               alt={vendor.businessName}
@@ -260,96 +269,106 @@ export default function Vendor() {
             />
           </div>
 
-          <div className="flex-1 w-full">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-4">
-              <div>
-                <div className="flex flex-wrap items-center gap-2 mb-2">
+          <div className="flex-1 w-full min-w-0">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 mb-2">
                   {vendor.category && (
-                    <Badge variant="secondary" className="uppercase tracking-wider text-[10px] md:text-xs font-semibold rounded-sm bg-primary/10 text-primary hover:bg-primary/20">
+                    <Badge variant="secondary" className="uppercase tracking-wider text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs font-semibold rounded-sm bg-primary/10 text-primary hover:bg-primary/20 px-1.5 py-0.5">
                       {vendor.category.name}
                     </Badge>
                   )}
                   {vendor.featured && (
-                    <Badge className="bg-yellow-500/10 text-yellow-700 dark:text-yellow-500 border-yellow-500/20 hover:bg-yellow-500/20">
-                      <Award className="w-3 h-3 mr-1" /> Featured
+                    <Badge className="bg-yellow-500/10 text-yellow-700 dark:text-yellow-500 border-yellow-500/20 hover:bg-yellow-500/20 text-[8px] xs:text-[9px] sm:text-xs px-1.5 py-0.5">
+                      <Award className="w-2 h-2 sm:w-2.5 sm:h-2.5 mr-0.5" /> Featured
                     </Badge>
                   )}
                   {vendor.verified && (
-                    <Badge variant="outline" className="border-green-500/30 text-green-600 dark:text-green-400 bg-green-500/5">
-                      <CheckCircle className="w-3 h-3 mr-1" /> Verified
+                    <Badge variant="outline" className="border-green-500/30 text-green-600 dark:text-green-400 bg-green-500/5 text-[8px] xs:text-[9px] sm:text-xs px-1.5 py-0.5">
+                      <CheckCircle className="w-2 h-2 sm:w-2.5 sm:h-2.5 mr-0.5" /> Verified
                     </Badge>
                   )}
                 </div>
 
-                <h1 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-2">
+                <h1 className="text-xl xs:text-[22px] sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-foreground mb-1 sm:mb-1.5 md:mb-2 break-words leading-tight">
                   {vendor.businessName}
                 </h1>
                 {vendor.user?.name && (
-                  <p className="text-sm text-muted-foreground mb-2">By {vendor.user.name}</p>
+                  <p className="text-xs xs:text-sm sm:text-sm text-muted-foreground mb-1.5 sm:mb-2">By {vendor.user.name}</p>
                 )}
 
-                <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1"><MapPin className="w-4 h-4" />{vendor.city}, {vendor.state}</span>
+                <div className="flex flex-wrap items-center gap-2 sm:gap-2 md:gap-4 text-xs xs:text-sm sm:text-sm text-muted-foreground">
+                  <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" /><span className="truncate">{vendor.city}, {vendor.state}</span></span>
                   <div className="flex items-center gap-1">
-                    <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
+                    <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-yellow-500 text-yellow-500 shrink-0" />
                     <span className="font-semibold text-foreground">{vendor.averageRating?.toFixed(1) ?? "0.0"}</span>
-                    <span>({vendor.reviewCount} reviews)</span>
+                    <span className="hidden xs:inline">({vendor.reviewCount} reviews)</span>
+                    <span className="xs:hidden">({vendor.reviewCount})</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 mt-2 md:mt-0 w-full md:w-auto">
-                <Button size="icon" variant="outline" className="rounded-full shrink-0" onClick={() => navigator.share?.({ title: vendor.businessName, url: window.location.href }).catch(() => {})}>
-                  <Share2 className="w-4 h-4" />
+              <div className="flex items-center gap-1.5 sm:gap-2 w-full md:w-auto flex-wrap md:flex-nowrap">
+                <Button 
+                  size="icon" 
+                  variant="outline" 
+                  className="rounded-full shrink-0 h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 border" 
+                  onClick={() => navigator.share?.({ title: vendor.businessName, url: window.location.href }).catch(() => {})}
+                  title="Share"
+                >
+                  <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </Button>
                 <Button
                   size="icon"
                   variant="outline"
-                  className={`rounded-full shrink-0 transition-colors ${saved ? "border-red-400 text-red-500 bg-red-50 dark:bg-red-950/20" : ""}`}
+                  className={`rounded-full shrink-0 h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 border transition-colors ${saved ? "border-red-400 text-red-500 bg-red-50 dark:bg-red-950/20" : ""}`}
                   onClick={handleSaveToggle}
                   title={saved ? "Remove from saved" : "Save vendor"}
                 >
-                  <Heart className={`w-4 h-4 transition-all ${saved ? "fill-red-500 text-red-500" : ""}`} />
+                  <Heart className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-all ${saved ? "fill-red-500 text-red-500" : ""}`} />
                 </Button>
                 <Button
                   size="icon"
                   variant="outline"
-                  className={`rounded-full shrink-0 transition-colors ${followed ? "border-primary text-primary bg-primary/10" : ""}`}
+                  className={`rounded-full shrink-0 h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 border transition-colors ${followed ? "border-primary text-primary bg-primary/10" : ""}`}
                   onClick={handleFollowToggle}
                   title={followed ? "Unfollow" : "Follow"}
                 >
-                  <Users className={`w-4 h-4 transition-all ${followed ? "fill-primary/30" : ""}`} />
+                  <Users className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-all ${followed ? "fill-primary/30" : ""}`} />
                 </Button>
                 <Button
-                  size="default"
+                  size="sm"
                   variant="outline"
-                  className="rounded-full flex-1 md:flex-none gap-2"
+                  className="rounded-full flex-1 md:flex-none gap-1 sm:gap-1.5 min-w-[75px] h-8 sm:h-9 md:h-10 text-xs xs:text-sm sm:text-sm px-2.5 sm:px-3 md:px-4 whitespace-nowrap"
                   onClick={handleMessage}
                   disabled={messaging}
                 >
-                  <MessageCircle className="w-4 h-4" />
-                  {messaging ? "Opening…" : "Message"}
+                  <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span>{messaging ? "..." : "Message"}</span>
                 </Button>
-                <Button className="rounded-full flex-1 md:flex-none gap-2" onClick={() => openBooking()}>
-                  <CalendarDays className="w-4 h-4" />
-                  Book Now
+                <Button 
+                  className="rounded-full flex-1 md:flex-none gap-1 sm:gap-1.5 min-w-[75px] h-8 sm:h-9 md:h-10 text-xs xs:text-sm sm:text-sm px-2.5 sm:px-3 md:px-4 whitespace-nowrap font-semibold" 
+                  onClick={() => openBooking()}
+                >
+                  <CalendarDays className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span>Book Now</span>
                 </Button>
               </div>
             </div>
 
-            <p className="text-muted-foreground text-sm leading-relaxed">{vendor.description}</p>
+            <p className="text-muted-foreground text-xs xs:text-sm sm:text-sm leading-relaxed break-words">{vendor.description}</p>
           </div>
         </div>
 
-        {/* Content Tabs */}
-        <div className="mt-8 mb-32 md:mb-16">
+        {/* Content Tabs - Mobile Responsive */}
+        <div className="mt-6 sm:mt-8 mb-24 sm:mb-32 md:mb-16">
           <Tabs defaultValue="services" className="w-full">
-            <TabsList className="w-full justify-start bg-transparent border-b rounded-none h-12 p-0 space-x-6 overflow-x-auto overflow-y-hidden no-scrollbar">
-              <TabsTrigger value="services" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3 pt-2 font-medium">Services</TabsTrigger>
-              <TabsTrigger value="about" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3 pt-2 font-medium">About</TabsTrigger>
-              <TabsTrigger value="portfolio" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3 pt-2 font-medium">Portfolio</TabsTrigger>
-              <TabsTrigger value="reviews" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3 pt-2 font-medium">Reviews</TabsTrigger>
-              <TabsTrigger value="location" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3 pt-2 font-medium">Location</TabsTrigger>
+            <TabsList className="w-full justify-start bg-transparent border-b rounded-none h-10 sm:h-12 p-0 gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden no-scrollbar">
+              <TabsTrigger value="services" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-2 sm:pb-3 pt-2 font-medium text-sm sm:text-base whitespace-nowrap">Services</TabsTrigger>
+              <TabsTrigger value="about" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-2 sm:pb-3 pt-2 font-medium text-sm sm:text-base whitespace-nowrap">About</TabsTrigger>
+              <TabsTrigger value="portfolio" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-2 sm:pb-3 pt-2 font-medium text-sm sm:text-base whitespace-nowrap">Portfolio</TabsTrigger>
+              <TabsTrigger value="reviews" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-2 sm:pb-3 pt-2 font-medium text-sm sm:text-base whitespace-nowrap">Reviews</TabsTrigger>
+              <TabsTrigger value="location" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-2 sm:pb-3 pt-2 font-medium text-sm sm:text-base whitespace-nowrap">Location</TabsTrigger>
             </TabsList>
 
             <div className="py-8">
@@ -624,54 +643,93 @@ export default function Vendor() {
         </div>
       </div>
 
-      {/* Sticky Mobile CTA */}
-      <div className="fixed bottom-0 left-0 right-0 md:hidden z-40 bg-background/95 backdrop-blur-md border-t px-4 py-3 flex gap-3">
-        <div className="flex-1">
-          <p className="text-xs text-muted-foreground">Starting from</p>
-          <p className="font-bold font-serif text-lg leading-tight">{minPrice > 0 ? formatNaira(minPrice) : "—"}</p>
+      {/* Sticky Mobile CTA - Adaptive with WhatsApp */}
+      <div className="fixed bottom-0 left-0 right-0 md:hidden z-40 bg-background/95 backdrop-blur-md border-t px-2 py-2 safe-area-bottom">
+        <div className="flex items-center gap-1.5">
+          <div className="flex-1 min-w-0">
+            <p className="text-[9px] text-muted-foreground leading-tight">From</p>
+            <p className="font-bold font-serif text-sm leading-tight truncate">{minPrice > 0 ? formatNaira(minPrice) : "—"}</p>
+          </div>
+          
+          {/* Message Button */}
+          <Button 
+            size="sm" 
+            variant="outline" 
+            className="rounded-full px-2 h-8 shrink-0"
+            onClick={handleMessage}
+            disabled={messaging}
+            title="Message"
+          >
+            <MessageCircle className="w-4 h-4" />
+          </Button>
+          
+          {/* WhatsApp Button (if available) */}
+          {vendor.whatsapp && (
+            <a
+              href={`https://wa.me/${vendor.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(`Hi, I'd like to book a service at ${vendor.businessName}`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-full border h-8 w-8 shrink-0 hover:bg-green-50 dark:hover:bg-green-950 transition-colors"
+              title="WhatsApp"
+            >
+              <svg className="w-4 h-4 text-green-600 dark:text-green-500" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.126 1.521 5.871L0 24l6.335-1.511A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.7-.498-5.254-1.371l-.377-.214-3.762.897.948-3.669-.232-.38A9.935 9.935 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+              </svg>
+            </a>
+          )}
+          
+          {/* Book Button */}
+          <Button className="rounded-full px-3 gap-1 h-8 text-xs whitespace-nowrap shrink-0 font-semibold" onClick={() => openBooking()}>
+            <CalendarDays className="w-3.5 h-3.5" />
+            Book
+          </Button>
         </div>
-        <Button className="rounded-full px-8 gap-2" onClick={() => openBooking()}>
-          <CalendarDays className="w-4 h-4" />
-          Book Now
-        </Button>
       </div>
 
-      {/* Sticky Desktop Booking Bar */}
-      <div className="hidden md:flex fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-card/95 backdrop-blur-md border shadow-xl rounded-full px-6 py-3 items-center gap-6">
-        <div className="flex items-center gap-3">
+      {/* Sticky Desktop Booking Bar - Fully Responsive */}
+      <div className="hidden md:flex fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-card/95 backdrop-blur-md border shadow-xl rounded-full px-3 lg:px-6 py-2 lg:py-3 items-center gap-2 lg:gap-6 max-w-[calc(100vw-2rem)]">
+        <div className="flex items-center gap-2 min-w-0">
           <img
             src={vendor.logoUrl || "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=200"}
             alt={vendor.businessName}
-            className="w-8 h-8 rounded-full object-cover border"
+            className="w-7 h-7 lg:w-8 lg:h-8 rounded-full object-cover border shrink-0"
           />
-          <div>
-            <p className="font-semibold text-sm leading-tight">{vendor.businessName}</p>
-            {minPrice > 0 && <p className="text-xs text-muted-foreground">from {formatNaira(minPrice)}</p>}
+          <div className="min-w-0">
+            <p className="font-semibold text-xs lg:text-sm leading-tight truncate">{vendor.businessName}</p>
+            {minPrice > 0 && <p className="text-[10px] lg:text-xs text-muted-foreground truncate">from {formatNaira(minPrice)}</p>}
           </div>
         </div>
-        <div className="w-px h-8 bg-border" />
-        <div className="flex items-center gap-1 text-sm">
-          <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-          <span className="font-semibold">{vendor.averageRating?.toFixed(1) ?? "0.0"}</span>
-          <span className="text-muted-foreground">({vendor.reviewCount})</span>
+        
+        <div className="w-px h-6 lg:h-8 bg-border shrink-0 hidden lg:block" />
+        
+        <div className="hidden lg:flex items-center gap-1 text-sm shrink-0">
+          <Star className="w-3.5 h-3.5 fill-yellow-500 text-yellow-500" />
+          <span className="font-semibold text-sm">{vendor.averageRating?.toFixed(1) ?? "0.0"}</span>
+          <span className="text-muted-foreground text-xs">({vendor.reviewCount})</span>
         </div>
-        <div className="w-px h-8 bg-border" />
-        <Button className="rounded-full px-6 gap-2 h-9" onClick={() => openBooking()}>
-          <CalendarDays className="w-4 h-4" />
-          Book Now
+        
+        <div className="w-px h-6 lg:h-8 bg-border shrink-0 hidden lg:block" />
+        
+        <Button className="rounded-full px-3 lg:px-6 gap-1.5 h-8 lg:h-9 text-xs lg:text-sm shrink-0" onClick={() => openBooking()}>
+          <CalendarDays className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
+          <span className="hidden lg:inline">Book Now</span>
+          <span className="lg:hidden">Book</span>
         </Button>
+        
         {vendor.whatsapp && (
           <a
             href={`https://wa.me/${vendor.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(`Hi, I'd like to book a service at ${vendor.businessName}`)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 h-9 rounded-full border text-sm font-medium hover:bg-green-50 hover:border-green-300 hover:text-green-700 transition-colors"
+            className="inline-flex items-center gap-1.5 px-2 lg:px-4 h-8 lg:h-9 rounded-full border text-xs lg:text-sm font-medium hover:bg-green-50 hover:border-green-300 hover:text-green-700 dark:hover:bg-green-950 dark:hover:text-green-400 transition-colors shrink-0"
+            title="WhatsApp"
           >
-            <svg className="w-4 h-4 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+            <svg className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-green-600 dark:text-green-500" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
               <path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.126 1.521 5.871L0 24l6.335-1.511A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.7-.498-5.254-1.371l-.377-.214-3.762.897.948-3.669-.232-.38A9.935 9.935 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
             </svg>
-            WhatsApp
+            <span className="hidden xl:inline">WhatsApp</span>
           </a>
         )}
       </div>

@@ -5,6 +5,9 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Extra small screen breakpoint for very small mobile devices */
+@custom-media --xs-and-up (width >= 375px);
+
 @theme inline {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -316,6 +319,19 @@
  * need to be distinguished from eachother visually.
  */
 @layer utilities {
+
+  /* xs breakpoint utilities for extra small screens */
+  @media (min-width: 375px) {
+    .xs\:inline { display: inline; }
+    .xs\:hidden { display: none; }
+    .xs\:block { display: block; }
+    .xs\:flex { display: flex; }
+  }
+
+  /* Safe area support for devices with notches */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
 
   /* Hide ugly search cancel button in Chrome until we can style it properly */
   input[type="search"]::-webkit-search-cancel-button {

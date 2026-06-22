@@ -51,28 +51,33 @@ export function Navbar() {
         ? "bg-background/85 backdrop-blur-xl border-b border-border/60 shadow-sm supports-[backdrop-filter]:bg-background/70"
         : "bg-background/40 backdrop-blur-md"
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-2.5 group">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 sm:h-20">
+          <div className="flex items-center gap-4 sm:gap-8 min-w-0">
+            <Link href="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
               <div className="relative">
-                <img src="/logo.png" alt="Casa Corona" className="h-11 w-11 object-contain transition-transform group-hover:scale-105" />
+                <img src="/logo.png" alt="Casa Corona" className="h-10 w-10 sm:h-11 sm:w-11 object-contain transition-transform group-hover:scale-105" />
                 <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl opacity-0 group-hover:opacity-60 transition-opacity" />
               </div>
-              <span className="font-serif font-bold text-2xl tracking-tight">
-                <span className="text-brand-gradient">Casa</span>{" "}
-                <span className="text-foreground">Corona</span>
+              <span className="font-serif font-bold tracking-tight">
+                <span className="hidden xs:inline text-xl sm:text-2xl whitespace-nowrap">
+                  <span className="text-brand-gradient">Casa</span>{" "}
+                  <span className="text-foreground">Corona</span>
+                </span>
+                <span className="xs:hidden flex flex-col leading-none text-lg">
+                  <span className="text-brand-gradient">Casa</span>
+                  <span className="text-foreground">Corona</span>
+                </span>
               </span>
             </Link>
 
-            <div className="hidden md:flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-4 lg:gap-6">
               <Link href="/browse" className={`text-sm font-medium transition-colors ${location === "/browse" ? "text-primary" : "text-foreground/70 hover:text-primary"}`}>Explore</Link>
-              <Link href="/browse?tab=professionals" className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors">Professionals</Link>
               <Link href="/about" className={`text-sm font-medium transition-colors ${location === "/about" ? "text-primary" : "text-foreground/70 hover:text-primary"}`}>About</Link>
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3 lg:gap-4">
             <ThemeToggle />
 
             {user ? (
@@ -142,17 +147,17 @@ export function Navbar() {
                 <Link href="/login" className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors">
                   Log in
                 </Link>
-                <Button asChild className="rounded-full px-5 h-9 text-sm">
+                <Button asChild className="rounded-full px-4 lg:px-5 h-9 text-sm">
                   <Link href="/signup">Get Started</Link>
                 </Button>
               </>
             )}
           </div>
 
-          <div className="md:hidden flex items-center gap-4">
+          <div className="md:hidden flex items-center gap-2 sm:gap-4">
             <ThemeToggle />
-            <button className="text-foreground p-2" onClick={() => setIsOpen(!isOpen)}>
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            <button className="text-foreground p-1.5 sm:p-2" onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -166,7 +171,7 @@ export function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-background border-b overflow-hidden"
           >
-            <div className="px-4 pt-2 pb-6 space-y-4">
+            <div className="px-3 sm:px-4 pt-2 pb-6 space-y-4">
               {user && (
                 <div className="flex items-center gap-3 px-3 py-3 border-b mb-2">
                   <Avatar className="h-9 w-9">
@@ -174,15 +179,14 @@ export function Navbar() {
                       {initials(user.name)}
                     </AvatarFallback>
                   </Avatar>
-                  <div>
-                    <p className="font-semibold text-sm">{user.name}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-sm truncate">{user.name}</p>
                     <p className="text-xs text-muted-foreground capitalize">{user.role}</p>
                   </div>
                 </div>
               )}
               <div className="flex flex-col space-y-1">
                 <Link href="/browse" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium rounded-xl hover:bg-muted">Explore</Link>
-                <Link href="/browse" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium rounded-xl hover:bg-muted">Professionals</Link>
                 <Link href="/about" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium rounded-xl hover:bg-muted">About</Link>
                 <Link href="/contact" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium rounded-xl hover:bg-muted">Contact</Link>
                 {user ? (

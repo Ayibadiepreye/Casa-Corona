@@ -80,7 +80,13 @@ export default function Browse() {
                 onChange={e => setSearch(e.target.value)}
               />
               {search && (
-                <button onClick={() => setSearch("")} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                <button 
+                  type="button"
+                  onClick={() => setSearch("")} 
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  aria-label="Clear search"
+                  title="Clear search"
+                >
                   <X className="w-4 h-4" />
                 </button>
               )}
@@ -103,6 +109,7 @@ export default function Browse() {
               {showStateDropdown && (
                 <div className="absolute top-full mt-2 right-0 bg-card border rounded-2xl shadow-xl z-50 w-56 max-h-64 overflow-y-auto p-2">
                   <button
+                    type="button"
                     onClick={() => { setActiveState(""); setShowStateDropdown(false); }}
                     className={cn("w-full text-left px-3 py-2 rounded-xl text-sm hover:bg-muted transition-colors", activeState === "" && "font-semibold text-primary")}
                   >
@@ -110,6 +117,7 @@ export default function Browse() {
                   </button>
                   {ALL_STATES.map(s => (
                     <button
+                      type="button"
                       key={s}
                       onClick={() => { setActiveState(s); setShowStateDropdown(false); }}
                       className={cn("w-full text-left px-3 py-2 rounded-xl text-sm hover:bg-muted transition-colors", activeState === s && "font-semibold text-primary")}
@@ -125,16 +133,18 @@ export default function Browse() {
       </div>
 
       {/* ── Tabs + category strip ──────────────────────────────────────────── */}
-      <div className="sticky top-[80px] z-40 bg-background/95 backdrop-blur-md border-b">
+      <div className="md:sticky md:top-[80px] z-40 bg-background/95 backdrop-blur-md border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-6 pt-3">
             <button
+              type="button"
               onClick={() => setTab("professionals")}
               className={cn("pb-3 text-sm font-medium border-b-2 transition-colors", tab === "professionals" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground")}
             >
               Professionals
             </button>
             <button
+              type="button"
               onClick={() => setTab("work")}
               className={cn("pb-3 text-sm font-medium border-b-2 transition-colors", tab === "work" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground")}
             >
@@ -145,6 +155,7 @@ export default function Browse() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center gap-3 overflow-x-auto no-scrollbar">
           <button
+            type="button"
             onClick={() => setActiveCategory("all")}
             className={cn("shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all border", activeCategory === "all" ? "bg-primary text-primary-foreground border-primary" : "bg-background text-foreground/70 border-border hover:border-primary/40 hover:text-primary")}
           >
@@ -152,6 +163,7 @@ export default function Browse() {
           </button>
           {categories.map(c => (
             <button
+              type="button"
               key={c.id}
               onClick={() => setActiveCategory(c.slug)}
               className={cn("shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all border whitespace-nowrap", activeCategory === c.slug ? "bg-primary text-primary-foreground border-primary" : "bg-background text-foreground/70 border-border hover:border-primary/40 hover:text-primary")}
@@ -164,6 +176,7 @@ export default function Browse() {
               value={sortBy}
               onChange={e => setSortBy(e.target.value as typeof sortBy)}
               className="text-xs border rounded-full px-3 py-1.5 bg-background font-medium focus:outline-none focus:ring-1 focus:ring-primary"
+              aria-label="Sort by"
             >
               <option value="featured">Featured</option>
               <option value="rating">Top Rated</option>
@@ -171,14 +184,20 @@ export default function Browse() {
             </select>
             <div className="flex bg-muted/50 p-0.5 rounded-full border">
               <button
+                type="button"
                 className={cn("p-1.5 rounded-full transition-colors", layout === "grid" ? "bg-background shadow-sm text-foreground" : "text-muted-foreground")}
                 onClick={() => setLayout("grid")}
+                title="Grid view"
+                aria-label="Grid view"
               >
                 <LayoutGrid className="w-3.5 h-3.5" />
               </button>
               <button
+                type="button"
                 className={cn("p-1.5 rounded-full transition-colors", layout === "list" ? "bg-background shadow-sm text-foreground" : "text-muted-foreground")}
                 onClick={() => setLayout("list")}
+                title="List view"
+                aria-label="List view"
               >
                 <Rows3 className="w-3.5 h-3.5" />
               </button>
@@ -194,6 +213,7 @@ export default function Browse() {
             {vendorsLoading ? "Searching..." : `${vendors.length} results`}
           </span>
           <button
+            type="button"
             onClick={() => { setSearch(""); setActiveCategory("all"); setActiveState(""); }}
             className="text-xs text-primary hover:underline ml-2"
           >
