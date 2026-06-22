@@ -120,8 +120,8 @@ export default function Home() {
 
         <div className="relative max-w-4xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            {/* Green pill tag */}
-            <span className="inline-flex items-center gap-1.5 mb-6 py-1.5 px-4 rounded-full text-xs font-medium border bg-primary/8 border-primary/20 text-primary">
+            {/* Brand pill with glow */}
+            <span className="inline-flex items-center gap-2 mb-6 py-1.5 px-4 rounded-full text-xs font-semibold border bg-primary/10 border-primary/30 text-primary backdrop-blur-sm shadow-sm shadow-primary/10">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
@@ -129,17 +129,17 @@ export default function Home() {
               Nigeria's Premium Self-Care Network
             </span>
 
-            {/* Headline with gradient text */}
+            {/* Headline with multi-stop brand gradient */}
             <h1 className="text-5xl md:text-7xl font-serif font-bold tracking-tight mb-6 leading-[1.05]">
-              <span className="bg-gradient-to-br from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
+              <span className="text-foreground">
                 Find Exceptional
               </span>
               <br />
-              <span className="bg-gradient-to-r from-primary via-primary to-emerald-600 bg-clip-text text-transparent">
-                Beauty & Wellness
+              <span className="text-emerald-gold">
+                Beauty &amp; Wellness
               </span>
               <br />
-              <span className="bg-gradient-to-br from-accent via-amber-600 to-accent bg-clip-text text-transparent">
+              <span className="text-brand-gradient">
                 Near You
               </span>
             </h1>
@@ -148,16 +148,16 @@ export default function Home() {
               Discover and book top-rated salons, spas, barbers, and aesthetic clinics across Lagos, Abuja, and Port Harcourt.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-sm sm:max-w-none mx-auto">
-              <Button size="lg" className="rounded-full px-8 h-12 text-base gap-2 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-shadow" asChild>
+              <Button size="lg" className="rounded-full px-8 h-12 text-base gap-2 glow-primary btn-shine" asChild>
                 <Link href="/browse"><Search className="w-4 h-4" /> Explore Work</Link>
               </Button>
-              <Button size="lg" variant="outline" className="rounded-full px-8 h-12 text-base border-2 hover:bg-primary/5" asChild>
+              <Button size="lg" variant="outline" className="rounded-full px-8 h-12 text-base border-2 hover:border-primary/50 hover:bg-primary/5 btn-shine" asChild>
                 <Link href="/signup">List Your Business <ArrowRight className="w-4 h-4 ml-1" /></Link>
               </Button>
             </div>
 
-            {/* Trust badges */}
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs text-muted-foreground">
+            {/* Trust badges with subtle backdrop */}
+            <div className="mt-10 inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs text-muted-foreground px-5 py-3 rounded-full glass">
               <span className="inline-flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-primary" /> Verified businesses</span>
               <span className="inline-flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-primary" /> Secure messaging</span>
               <span className="inline-flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" /> Real reviews</span>
@@ -422,19 +422,27 @@ export default function Home() {
       <section className="py-14 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           {[
-            { value: `${categories.length}`, label: "Categories", gradient: "from-primary/10 to-emerald-500/5", icon: Sparkles },
-            { value: "36", label: "States Covered", gradient: "from-amber-500/10 to-accent/5", icon: Globe },
-            { value: `100+`, label: "Professionals", gradient: "from-blue-500/10 to-indigo-500/5", icon: Users },
-            { value: "4.8★", label: "Average Rating", gradient: "from-pink-500/10 to-rose-500/5", icon: Star },
+            { value: `${categories.length}`, label: "Categories", gradient: "from-primary/10 via-emerald-500/5 to-transparent", icon: Sparkles, iconColor: "text-primary" },
+            { value: "36", label: "States Covered", gradient: "from-amber-500/10 via-accent/5 to-transparent", icon: Globe, iconColor: "text-amber-500" },
+            { value: `100+`, label: "Professionals", gradient: "from-blue-500/10 via-indigo-500/5 to-transparent", icon: Users, iconColor: "text-blue-500" },
+            { value: "4.8★", label: "Average Rating", gradient: "from-pink-500/10 via-rose-500/5 to-transparent", icon: Star, iconColor: "text-amber-500" },
           ].map(stat => {
             const Icon = stat.icon;
             return (
-              <div key={stat.label} className={cn("relative rounded-2xl border p-6 overflow-hidden group hover:border-primary/30 transition-colors bg-gradient-to-br", stat.gradient)}>
-                <div className="absolute top-3 right-3 opacity-20 group-hover:opacity-40 transition-opacity">
+              <div
+                key={stat.label}
+                className={cn(
+                  "relative rounded-2xl border border-border/60 p-6 overflow-hidden group hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br backdrop-blur-sm shadow-sm hover:shadow-md",
+                  stat.gradient
+                )}
+              >
+                <div className={cn("absolute top-3 right-3 opacity-25 group-hover:opacity-50 group-hover:scale-110 transition-all duration-300", stat.iconColor)}>
                   <Icon className="w-8 h-8" />
                 </div>
-                <p className="text-3xl md:text-4xl font-serif font-bold bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent mb-1">{stat.value}</p>
+                <p className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-1">{stat.value}</p>
                 <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{stat.label}</p>
+                {/* Bottom accent line on hover */}
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             );
           })}
@@ -457,14 +465,19 @@ export default function Home() {
               { icon: BarChart3, title: "Built-in analytics", desc: "See how many people viewed your profile, which services get attention, and how your business is growing over time." },
               { icon: MessageCircle, title: "Direct messaging", desc: "Communicate with clients directly through the platform. No phone calls until you're ready." },
               { icon: Zap, title: "Quick to set up", desc: "Your business profile can be live in under 10 minutes. Add services, portfolio photos, and pricing in one go." },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="relative p-5 rounded-2xl border bg-card hover:border-primary/30 transition-all group overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+            ].map(({ icon: Icon, title, desc }, idx) => (
+              <div
+                key={title}
+                className="relative p-5 rounded-2xl border border-border/60 bg-card hover:border-primary/40 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 group overflow-hidden"
+                style={{ animationDelay: `${idx * 50}ms` }}
+              >
+                {/* Hover gradient wash */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/15 to-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/20 to-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-md group-hover:shadow-primary/20 transition-all duration-300 ring-1 ring-primary/10">
                     <Icon className="w-5 h-5 text-primary" />
                   </div>
-                  <h3 className="font-semibold mb-1.5">{title}</h3>
+                  <h3 className="font-semibold mb-1.5 text-foreground">{title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
                 </div>
               </div>
@@ -473,23 +486,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CTA with mesh gradient ─────────────────────────────────────── */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary via-emerald-700 to-primary" />
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute -top-20 -left-20 w-[400px] h-[400px] rounded-full bg-accent/30 blur-3xl" />
-          <div className="absolute -bottom-20 -right-20 w-[400px] h-[400px] rounded-full bg-emerald-400/30 blur-3xl" />
+      {/* ── CTA with brand gradient + glassmorphism ────────────────────── */}
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-aurora">
+        <div className="absolute inset-0 opacity-40">
+          <div className="absolute -top-20 -left-20 w-[450px] h-[450px] rounded-full bg-accent/40 blur-3xl" />
+          <div className="absolute -bottom-20 -right-20 w-[450px] h-[450px] rounded-full bg-primary/40 blur-3xl" />
         </div>
-        <div className="relative max-w-3xl mx-auto text-center text-primary-foreground">
+        <div className="relative max-w-3xl mx-auto text-center text-white">
           <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Ready to join the community?</h2>
-          <p className="text-base opacity-90 mb-8 max-w-xl mx-auto">
+          <p className="text-base opacity-95 mb-8 max-w-xl mx-auto">
             Customers — find exceptional talent across Nigeria. Professionals — get your work in front of thousands of potential clients.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button size="lg" variant="secondary" className="rounded-full px-8 h-12 text-base bg-white text-primary hover:bg-white/95 shadow-xl" asChild>
+            <Button size="lg" variant="secondary" className="rounded-full px-8 h-12 text-base bg-emerald-gold !text-white hover:opacity-90 shadow-xl btn-shine" asChild>
               <Link href="/browse">Explore as a Customer</Link>
             </Button>
-            <Button size="lg" variant="outline" className="rounded-full px-8 h-12 text-base border-2 border-white/40 text-white hover:bg-white/10 hover:border-white/60 backdrop-blur-sm" asChild>
+            <Button size="lg" variant="outline" className="rounded-full px-8 h-12 text-base border-2 border-white !text-foreground hover:!bg-foreground/10 hover:!border-foreground shadow-xl btn-shine" asChild>
               <Link href="/signup">List Your Business</Link>
             </Button>
           </div>

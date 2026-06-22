@@ -46,13 +46,23 @@ export function Navbar() {
   const dashboardHref = user?.role === "vendor" ? "/vendor/dashboard" : user?.role === "admin" ? "/admin" : "/account";
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-md border-b shadow-sm" : "bg-background/60 backdrop-blur-sm"}`}>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      scrolled
+        ? "bg-background/85 backdrop-blur-xl border-b border-border/60 shadow-sm supports-[backdrop-filter]:bg-background/70"
+        : "bg-background/40 backdrop-blur-md"
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-2.5">
-              <img src="/logo.png" alt="Casa Corona" className="h-11 w-11 object-contain" />
-              <span className="font-serif font-bold text-2xl tracking-tight text-foreground">Casa Corona</span>
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="relative">
+                <img src="/logo.png" alt="Casa Corona" className="h-11 w-11 object-contain transition-transform group-hover:scale-105" />
+                <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl opacity-0 group-hover:opacity-60 transition-opacity" />
+              </div>
+              <span className="font-serif font-bold text-2xl tracking-tight">
+                <span className="text-brand-gradient">Casa</span>{" "}
+                <span className="text-foreground">Corona</span>
+              </span>
             </Link>
 
             <div className="hidden md:flex items-center gap-6">

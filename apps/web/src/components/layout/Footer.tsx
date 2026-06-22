@@ -47,11 +47,11 @@ export function Footer() {
 
           {/* Brand column */}
           <div className="md:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5 mb-5">
-              <img src="/logo.png" alt="Casa Corona" className="h-11 w-11 object-contain" />
+            <Link href="/" className="flex items-center gap-2.5 mb-5 group">
+              <img src="/logo.png" alt="Casa Corona" className="h-11 w-11 object-contain transition-transform group-hover:scale-105" />
               <span className="font-serif font-bold text-2xl tracking-tight">
                 <span className="text-foreground">Casa</span>{" "}
-                <span className="bg-gradient-to-r from-accent to-amber-600 bg-clip-text text-transparent">Corona</span>
+                <span className="text-brand-gradient">Corona</span>
               </span>
             </Link>
 
@@ -136,7 +136,7 @@ export function Footer() {
                 type="submit"
                 aria-label="Subscribe"
                 disabled={submitting}
-                className="absolute right-1 top-1 h-9 w-9 rounded-full bg-gradient-to-br from-primary to-emerald-600 hover:from-primary/90 hover:to-emerald-600/90 text-white flex items-center justify-center shadow-md shadow-primary/20 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="absolute right-1 top-1 h-9 w-9 rounded-full bg-emerald-gold hover:opacity-90 text-white flex items-center justify-center shadow-md shadow-primary/30 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed btn-shine"
               >
                 <Send className="w-3.5 h-3.5" />
               </button>
@@ -154,8 +154,10 @@ export function Footer() {
           {/* Copyright */}
           <p className="text-sm text-muted-foreground order-2 md:order-1">
             © {new Date().getFullYear()}{" "}
-            <span className="font-semibold text-foreground">Casa</span>
-            <span className="font-semibold bg-gradient-to-r from-accent to-amber-600 bg-clip-text text-transparent">Corona</span>
+            <span className="font-semibold">
+              <span className="text-foreground">Casa</span>{" "}
+              <span className="text-brand-gradient">Corona</span>
+            </span>
             . All rights reserved.
           </p>
 
