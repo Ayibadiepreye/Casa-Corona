@@ -213,6 +213,7 @@ export async function me(userId: string) {
 export async function googleLogin(profile: { email: string; name: string; avatarUrl?: string; googleId?: string }) {
   // Find existing user by email
   let [user] = await db.select().from(usersTable).where(eq(usersTable.email, profile.email)).limit(1);
+  let isNewUser = false;
 
   if (!user) {
     // Create a new account — but mark email as UNVERIFIED so the user is
@@ -225,6 +226,7 @@ export async function googleLogin(profile: { email: string; name: string; avatar
       role: 'customer',
       emailVerified: false,
     }).returning();
+    isNewUser = true;
   }
   
   // Create vendor profile if user is vendor and doesn't have one
@@ -245,8 +247,17 @@ export async function googleLogin(profile: { email: string; name: string; avatar
     }
   }
   
-  // Note: we do NOT auto-verify on Google login. User is prompted to verify
-  // via OTP in their dashboard.
+  // For new OAuth users who need verification, send OTP immediately
+  if (isNewUser && !user.emailVerified) {
+    const otp = generateOtp();
+    await redisService.setEx('otp:' + user.email, otp, 600);
+    await redisService.setEx('otp_meta:' + user.email, JSON.stringify({ userId: user.id, attempts: 0 }), 600);
+    await emailService.sendOtp(user.email, { otp, name: user.name });
+    
+    if (env.NODE_ENV === 'development' && !env.RESEND_API_KEY) {
+      logger.info(`\n[DEV OTP] ${user.email} → ${otp}\n`);
+    }
+  }
 
   await db.insert(loginHistoryTable).values({ userId: user.id, success: true });
   await db.update(usersTable).set({ lastLoginAt: new Date() }).where(eq(usersTable.id, user.id));

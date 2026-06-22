@@ -23,6 +23,7 @@ import paymentsRouter from "../modules/payments/payments.routes.js";
 import notificationsRouter from "../modules/notifications/notifications.routes.js";
 import announcementsRouter from "../modules/announcements/announcement.routes.js";
 import newsletterRouter from "../modules/newsletter/newsletter.routes.js";
+import contactRouter from "../modules/contact/contact.routes.js";
 
 const v1Router: IRouter = Router();
 v1Router.use("/auth", authRouter);
@@ -35,6 +36,7 @@ v1Router.use("/admin", adminRouter);
 v1Router.use("/settings", settingsRouter);
 v1Router.use("/compliance", complianceRouter);
 v1Router.use("/analytics", analyticsRouter);
+v1Router.use("/contact", contactRouter);
 v1Router.use("/", reviewRouter);
 v1Router.use("/", savedRouter);
 v1Router.use("/", followRouter);

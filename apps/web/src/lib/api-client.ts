@@ -254,6 +254,11 @@ export const userApi = {
     apiPatch<User>("/users/me/notification-preferences", prefs),
 };
 
+export const contactApi = {
+  submit: (data: { name: string; email: string; subject: string; message: string }) =>
+    apiPost<{ success: boolean; message: string }>("/contact", data),
+};
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Core domain types
 // ─────────────────────────────────────────────────────────────────────────────

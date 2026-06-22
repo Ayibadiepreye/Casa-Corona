@@ -244,3 +244,22 @@ export async function sendBookingReceived(to: string, data: any) {
   `, "New booking received");
   return sendEmail(to, "New booking — Casa Corona", html);
 }
+
+export async function sendContactForm(to: string, data: { name: string; email: string; subject: string; message: string }) {
+  const html = wrapHtml(`
+    <p class="greeting">New Contact Form Submission 📬</p>
+    <p class="body-text">You have received a new message through the Casa Corona contact form.</p>
+    <div style="background-color: #f9f9f9; border-radius: 8px; padding: 20px; margin: 24px 0;">
+      <div class="info-row"><span class="info-label">Name</span><span class="info-value">${data.name}</span></div>
+      <div class="info-row"><span class="info-label">Email</span><span class="info-value">${data.email}</span></div>
+      <div class="info-row"><span class="info-label">Subject</span><span class="info-value">${data.subject}</span></div>
+    </div>
+    <p class="body-text"><strong>Message:</strong></p>
+    <div style="background-color: #f9f9f9; border-left: 4px solid #1a1a1a; padding: 16px; margin: 16px 0; border-radius: 4px; white-space: pre-wrap; font-size: 14px; color: #4a4a4a;">${data.message}</div>
+    <p class="body-text" style="margin-top: 24px; font-size: 13px; color: #8b8b8b;">Reply to this inquiry: <a href="mailto:${data.email}">${data.email}</a></p>
+  `, `New contact form from ${data.name}`);
+  
+  const text = `New Contact Form Submission\n\nName: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject}\n\nMessage:\n${data.message}\n\nReply to: ${data.email}`;
+  
+  return sendEmail(to, `Contact Form: ${data.subject} — Casa Corona`, html, text);
+}

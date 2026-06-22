@@ -346,7 +346,8 @@ export default function Account() {
                 }
                 setChangingPw(true);
                 try {
-                  await authApi.setPassword(newPassword);
+                  // Use the change password endpoint for OAuth users (no currentPassword needed)
+                  await userApi.changePassword({ currentPassword: "", newPassword });
                   toast({ title: "Password set successfully" });
                   setNewPassword("");
                   setConfirmPassword("");
@@ -425,52 +426,54 @@ export default function Account() {
         )}
       </div>
 
-      {/* ── Change password ────────────────────────────────────────────────── */}
-      <div className="bg-card border rounded-2xl p-6">
-        <h2 className="font-semibold text-lg mb-5">Change Password</h2>
-        <div className="space-y-4">
-          <div className="space-y-1.5">
-            <Label>Current Password</Label>
-            <Input
-              type="password"
-              placeholder="••••••••"
-              className="h-11"
-              value={currentPassword}
-              onChange={e => setCurrentPassword(e.target.value)}
-            />
-          </div>
-          <div className="space-y-1.5">
-            <Label>New Password</Label>
-            <Input
-              type="password"
-              placeholder="••••••••"
-              className="h-11"
-              value={newPassword}
-              onChange={e => setNewPassword(e.target.value)}
-            />
-          </div>
-          <div className="space-y-1.5">
-            <Label>Confirm New Password</Label>
-            <Input
-              type="password"
-              placeholder="••••••••"
-              className="h-11"
-              value={confirmPassword}
-              onChange={e => setConfirmPassword(e.target.value)}
-            />
-          </div>
-          <div className="flex justify-end">
-            <Button
-              variant="outline"
-              className="rounded-full px-8"
-              onClick={handleChangePassword}
-              disabled={changingPw || !currentPassword || !newPassword}
-            >
-              {changingPw ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Updating…</> : "Update Password"}
-            </Button>
+      {/* ── Change password (only for users who already have a password) ────── */}
+      {user && user.hasPassword === true && (
+        <div className="bg-card border rounded-2xl p-6">
+          <h2 className="font-semibold text-lg mb-5">Change Password</h2>
+          <div className="space-y-4">
+            <div className="space-y-1.5">
+              <Label>Current Password</Label>
+              <Input
+                type="password"
+                placeholder="••••••••"
+                className="h-11"
+                value={currentPassword}
+                onChange={e => setCurrentPassword(e.target.value)}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label>New Password</Label>
+              <Input
+                type="password"
+                placeholder="••••••••"
+                className="h-11"
+                value={newPassword}
+                onChange={e => setNewPassword(e.target.value)}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label>Confirm New Password</Label>
+              <Input
+                type="password"
+                placeholder="••••••••"
+                className="h-11"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+              />
+            </div>
+            <div className="flex justify-end">
+              <Button
+                variant="outline"
+                className="rounded-full px-8"
+                onClick={handleChangePassword}
+                disabled={changingPw || !currentPassword || !newPassword}
+              >
+                {changingPw ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Updating…</> : "Update Password"}
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

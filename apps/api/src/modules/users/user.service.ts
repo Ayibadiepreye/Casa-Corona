@@ -22,10 +22,14 @@ export async function updateProfile(userId: string, data: any) {
 
 export async function changePassword(userId: string, { currentPassword, newPassword }: any) {
   const [user] = await db.select().from(usersTable).where(eq(usersTable.id, userId)).limit(1);
-  if (!user || !user.passwordHash) throw new NotFoundError('User not found');
+  if (!user) throw new NotFoundError('User not found');
 
-  const valid = await comparePasswords(currentPassword, user.passwordHash);
-  if (!valid) throw new UnauthorizedError('Invalid current password');
+  // If user has no password (OAuth user), allow setting password without currentPassword
+  if (user.passwordHash) {
+    // User has a password, verify current password
+    const valid = await comparePasswords(currentPassword, user.passwordHash);
+    if (!valid) throw new UnauthorizedError('Invalid current password');
+  }
 
   const passwordHash = await hashPassword(newPassword);
   await db.update(usersTable).set({ passwordHash, refreshToken: null }).where(eq(usersTable.id, userId));
