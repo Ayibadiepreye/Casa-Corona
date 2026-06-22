@@ -29,6 +29,29 @@ export default function Account() {
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
+  // Handle OAuth redirect with tokens in URL fragment
+  useEffect(() => {
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    const accessToken = params.get('access_token');
+    const refreshToken = params.get('refresh_token');
+    
+    if (accessToken && refreshToken) {
+      // Store tokens
+      localStorage.setItem('cc_access_token', accessToken);
+      // Note: We can't store httpOnly refresh token in localStorage for security
+      // The backend should also set it as a cookie, but this ensures access token works
+      
+      // Clear URL fragment
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      
+      // Refresh auth state
+      refresh?.();
+      
+      toast({ title: "Welcome!", description: "You're now signed in with Google." });
+    }
+  }, [refresh, toast]);
+
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;

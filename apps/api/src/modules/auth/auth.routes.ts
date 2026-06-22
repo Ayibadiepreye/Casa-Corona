@@ -85,25 +85,14 @@ if (env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET) {
         googleId: profile.id,
       });
 
-      // Set cookies + redirect to frontend
-      if ('accessToken' in result && result.accessToken) {
-        res.cookie('access_token', result.accessToken, {
-          httpOnly: true,
-          secure: true,
-          sameSite: 'none',
-          maxAge: 15 * 60 * 1000,
-        });
-      }
-      if ('refreshToken' in result && result.refreshToken) {
-        res.cookie('refresh_token', result.refreshToken, {
-          httpOnly: true,
-          secure: true,
-          sameSite: 'none',
-          maxAge: 7 * 24 * 60 * 60 * 1000,
-        });
-      }
+      // For cross-domain auth, pass tokens in URL fragment (not query params for security)
+      // Frontend will extract and store them
       const frontendUrl = env.FRONTEND_URL || 'http://localhost:5173';
-      return res.redirect(`${frontendUrl}/account?oauth=google`);
+      if ('accessToken' in result && result.accessToken && 'refreshToken' in result && result.refreshToken) {
+        // Use URL fragment (#) so tokens aren't sent to server or logged
+        return res.redirect(`${frontendUrl}/account?oauth=google#access_token=${encodeURIComponent(result.accessToken)}&refresh_token=${encodeURIComponent(result.refreshToken)}`);
+      }
+      return res.redirect(`${frontendUrl}/account?oauth=google&error=no_tokens`);
     } catch (e: any) {
       return res.status(500).json({ success: false, error: { code: 'OAUTH_ERROR', message: e?.message || 'OAuth failed' } });
     }
