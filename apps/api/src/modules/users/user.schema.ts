@@ -12,8 +12,8 @@ export const updateProfileSchema = z.object({
 });
 
 export const changePasswordSchema = z.object({
-  currentPassword: z.string().min(1),
-  newPassword: z.string().min(8),
+  currentPassword: z.string().optional().default(""), // Optional for OAuth users setting password for first time
+  newPassword: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 export const updateNotificationPrefsSchema = z.record(z.boolean());

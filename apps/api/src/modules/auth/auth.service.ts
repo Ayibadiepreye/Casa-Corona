@@ -207,7 +207,7 @@ export async function me(userId: string) {
   const [user] = await db.select().from(usersTable).where(eq(usersTable.id, userId)).limit(1);
   if (!user) throw new NotFoundError('User not found');
   const { passwordHash, refreshToken, resetToken, ...safeUser } = user;
-  return safeUser;
+  return { ...safeUser, hasPassword: !!passwordHash };
 }
 
 export async function googleLogin(profile: { email: string; name: string; avatarUrl?: string; googleId?: string }) {
