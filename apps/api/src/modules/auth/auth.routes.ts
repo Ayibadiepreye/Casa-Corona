@@ -89,16 +89,16 @@ if (env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET) {
       if ('accessToken' in result && result.accessToken) {
         res.cookie('access_token', result.accessToken, {
           httpOnly: true,
-          secure: env.NODE_ENV === 'production',
-          sameSite: 'lax',
+          secure: true,
+          sameSite: 'none',
           maxAge: 15 * 60 * 1000,
         });
       }
       if ('refreshToken' in result && result.refreshToken) {
         res.cookie('refresh_token', result.refreshToken, {
           httpOnly: true,
-          secure: env.NODE_ENV === 'production',
-          sameSite: 'lax',
+          secure: true,
+          sameSite: 'none',
           maxAge: 7 * 24 * 60 * 60 * 1000,
         });
       }

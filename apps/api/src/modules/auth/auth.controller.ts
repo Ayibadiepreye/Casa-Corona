@@ -20,14 +20,14 @@ export async function verifyOtp(req: Request, res: Response, next: NextFunction)
     if ('accessToken' in result && 'refreshToken' in result) {
       res.cookie('access_token', result.accessToken, {
         httpOnly: true,
-        secure: env.NODE_ENV === 'production',
-        sameSite: 'lax',
+        secure: true,
+        sameSite: 'none',
         maxAge: 60 * 60 * 1000, // 1h — access token
       });
       res.cookie('refresh_token', result.refreshToken, {
         httpOnly: true,
-        secure: env.NODE_ENV === 'production',
-        sameSite: 'lax',
+        secure: true,
+        sameSite: 'none',
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       });
     }
@@ -87,14 +87,14 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       await clearFailedLogins(email);
       res.cookie('access_token', result.accessToken, {
         httpOnly: true,
-        secure: env.NODE_ENV === 'production',
-        sameSite: 'lax',
+        secure: true,
+        sameSite: 'none',
         maxAge: 60 * 60 * 1000, // 1h — access token
       });
       res.cookie('refresh_token', result.refreshToken, {
         httpOnly: true,
-        secure: env.NODE_ENV === 'production',
-        sameSite: 'lax',
+        secure: true,
+        sameSite: 'none',
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       });
     } else {
@@ -129,14 +129,14 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
     const result = await authService.refresh({ refreshToken });
     res.cookie('access_token', result.accessToken, {
       httpOnly: true,
-      secure: env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
       maxAge: 60 * 60 * 1000, // 1h — access token
     });
     res.cookie('refresh_token', result.refreshToken, {
       httpOnly: true,
-      secure: env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     });
     ok(res, result);
