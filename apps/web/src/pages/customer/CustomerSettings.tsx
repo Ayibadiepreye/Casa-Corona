@@ -7,6 +7,16 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
 import { useLocation } from "wouter";
 import { userApi } from "@/lib/api-client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 type NotifPrefs = {
   emailMessages: boolean;
@@ -39,6 +49,7 @@ export default function CustomerSettings() {
   const [prefs, setPrefs] = useState<NotifPrefs>(defaultPrefs);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   // Seed from user's stored prefs
   useEffect(() => {
@@ -66,7 +77,6 @@ export default function CustomerSettings() {
   };
 
   const deleteAccount = async () => {
-    if (!confirm("Are you sure you want to permanently delete your account? This cannot be undone.")) return;
     setDeleting(true);
     try {
       await userApi.deleteAccount();
@@ -77,6 +87,7 @@ export default function CustomerSettings() {
       toast({ title: "Error", description: e.message ?? "Failed to delete account", variant: "destructive" });
     } finally {
       setDeleting(false);
+      setShowDeleteDialog(false);
     }
   };
 
@@ -144,10 +155,27 @@ export default function CustomerSettings() {
       <div className="bg-destructive/5 border border-destructive/20 rounded-2xl p-6">
         <h2 className="font-semibold text-lg text-destructive mb-1">Danger Zone</h2>
         <p className="text-sm text-muted-foreground mb-4">Once you delete your account, there is no going back.</p>
-        <Button variant="destructive" className="rounded-full" onClick={deleteAccount} disabled={deleting}>
+        <Button variant="destructive" className="rounded-full" onClick={() => setShowDeleteDialog(true)} disabled={deleting}>
           {deleting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Deleting…</> : "Delete Account"}
         </Button>
       </div>
+
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete your account?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to permanently delete your account? This action cannot be undone and all your data will be lost.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={deleteAccount} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete Account
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

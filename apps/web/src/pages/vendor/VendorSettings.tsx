@@ -8,6 +8,16 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
 import { useLocation } from "wouter";
 import { userApi } from "@/lib/api-client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 type NotifPrefs = {
   emailMessages: boolean;
@@ -40,6 +50,7 @@ export default function VendorSettings() {
   const [savingProfile, setSavingProfile] = useState(false);
   const [savingPrefs, setSavingPrefs] = useState(false);
   const [deactivating, setDeactivating] = useState(false);
+  const [showDeactivateDialog, setShowDeactivateDialog] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -76,8 +87,8 @@ export default function VendorSettings() {
   };
 
   const deactivate = async () => {
-    if (!confirm("Deactivate your listing? Your profile will be hidden from search.")) return;
     setDeactivating(true);
+    setShowDeactivateDialog(false);
     try {
       await userApi.deleteAccount();
       await signOut();
@@ -155,7 +166,7 @@ export default function VendorSettings() {
           <Button
             variant="outline"
             className="rounded-full border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
-            onClick={deactivate}
+            onClick={() => setShowDeactivateDialog(true)}
             disabled={deactivating}
           >
             {deactivating ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Processing…</> : "Delete Account"}
@@ -169,6 +180,23 @@ export default function VendorSettings() {
           </Button>
         </div>
       </div>
+
+      <AlertDialog open={showDeactivateDialog} onOpenChange={setShowDeactivateDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Deactivate Your Listing?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Your profile will be hidden from search and customers won't be able to find or contact you. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={deactivate} className="bg-destructive hover:bg-destructive/90">
+              Delete Account
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

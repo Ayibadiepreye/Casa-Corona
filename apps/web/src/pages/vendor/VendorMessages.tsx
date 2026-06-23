@@ -18,6 +18,16 @@ import {
   sendMessageSocket,
   markReadSocket,
 } from "@/lib/socket";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 function timeAgo(dateStr: string): string {
   if (!dateStr) return "";
@@ -37,6 +47,7 @@ export default function VendorMessages() {
   const [uploading, setUploading] = useState(false);
   const [messages, setMessages] = useState<ConversationMessage[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(false);
+  const [showEndChatDialog, setShowEndChatDialog] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { user, token } = useAuth();
@@ -156,10 +167,10 @@ export default function VendorMessages() {
 
   const handleEndChat = async () => {
     if (!activeId) return;
-    if (!confirm("End this chat? The conversation will close but messages remain until auto-cleanup.")) return;
     try {
       await conversationApi.end(activeId);
       toast({ title: "Chat ended" });
+      setShowEndChatDialog(false);
       refetch();
     } catch (err: any) {
       toast({ title: "Failed to end chat", description: err.message, variant: "destructive" });
@@ -270,7 +281,7 @@ export default function VendorMessages() {
                   <Button
                     size="icon"
                     variant="ghost"
-                    onClick={handleEndChat}
+                    onClick={() => setShowEndChatDialog(true)}
                     title="End chat"
                     className="h-8 w-8 text-destructive hover:text-destructive"
                   >
@@ -322,6 +333,7 @@ export default function VendorMessages() {
                     accept="image/*"
                     className="hidden"
                     onChange={handleFileUpload}
+                    aria-label="Upload image attachment"
                   />
                   <Button
                     size="icon"
@@ -359,6 +371,23 @@ export default function VendorMessages() {
           </div>
         )}
       </div>
+
+      <AlertDialog open={showEndChatDialog} onOpenChange={setShowEndChatDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>End this chat?</AlertDialogTitle>
+            <AlertDialogDescription>
+              The conversation will close but messages remain until auto-cleanup.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleEndChat} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              End Chat
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

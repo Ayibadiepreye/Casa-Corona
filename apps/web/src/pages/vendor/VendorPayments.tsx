@@ -8,6 +8,16 @@ import { useApi } from "@/hooks/useApi";
 import { paymentApi, Plan, myVendorApi } from "@/lib/api-client";
 import { formatNaira } from "@/lib/utils";
 import { differenceInDays, format } from "date-fns";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 type Status = "active" | "expired" | "cancelled" | "pending";
 
@@ -15,6 +25,7 @@ export default function VendorPayments() {
   const { toast } = useToast();
   const [busy, setBusy] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
+  const [cancelSubId, setCancelSubId] = useState<string | null>(null);
 
   // Backend lives — strip mock data and load real ones
   const { data: plansData } = useApi<{ plans: Plan[] }>(() => paymentApi.plans(), []);
@@ -113,8 +124,8 @@ export default function VendorPayments() {
   };
 
   const handleCancel = async (id: string) => {
-    if (!confirm("Cancel this subscription? It will remain active until expiry.")) return;
     setBusy(id);
+    setCancelSubId(null);
     try {
       await paymentApi.cancel(id);
       await refetchSubs();
@@ -229,7 +240,7 @@ export default function VendorPayments() {
                         size="sm"
                         variant="outline"
                         disabled={busy === s.id}
-                        onClick={() => handleCancel(s.id)}
+                        onClick={() => setCancelSubId(s.id)}
                       >
                         {busy === s.id ? <Loader2 className="w-3 h-3 animate-spin" /> : "Cancel"}
                       </Button>
@@ -371,6 +382,23 @@ export default function VendorPayments() {
           </CardContent>
         </Card>
       </section>
+
+      <AlertDialog open={!!cancelSubId} onOpenChange={(open) => !open && setCancelSubId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancel Subscription?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Your subscription will remain active until its expiry date, but won't auto-renew. You can subscribe again anytime.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Keep Subscription</AlertDialogCancel>
+            <AlertDialogAction onClick={() => cancelSubId && handleCancel(cancelSubId)} className="bg-destructive hover:bg-destructive/90">
+              Yes, Cancel
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

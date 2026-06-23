@@ -13,6 +13,16 @@ import {
   sendMessageSocket,
   markReadSocket,
 } from "@/lib/socket";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 function timeAgo(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime();
@@ -33,6 +43,7 @@ export default function CustomerMessages({ conversationId }: { conversationId?: 
   const [sending, setSending] = useState(false);
   const [messages, setMessages] = useState<ConversationMessage[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(false);
+  const [showEndChatDialog, setShowEndChatDialog] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const { user, token } = useAuth();
   const { toast } = useToast();
@@ -73,11 +84,12 @@ export default function CustomerMessages({ conversationId }: { conversationId?: 
   };
 
   // ── End chat (delete conversation) ────────────────────────────────────
-  const handleEndChat = async (id: string) => {
-    if (!confirm("End this conversation? It will be archived and deleted after 24 hours.")) return;
+  const handleEndChat = async () => {
+    if (!activeId) return;
     try {
-      await conversationApi.end(id);
+      await conversationApi.end(activeId);
       setActiveId(null);
+      setShowEndChatDialog(false);
       refetch();
       toast({ title: "Chat ended", description: "Messages will be permanently deleted in 24 hours." });
     } catch (e: any) {
@@ -288,7 +300,7 @@ export default function CustomerMessages({ conversationId }: { conversationId?: 
               <Button
                 size="icon"
                 variant="ghost"
-                onClick={() => handleEndChat(activeConvo.id)}
+                onClick={() => setShowEndChatDialog(true)}
                 title="End chat"
                 aria-label="End chat"
                 className="text-red-500 hover:text-red-600"
@@ -354,6 +366,7 @@ export default function CustomerMessages({ conversationId }: { conversationId?: 
                   multiple
                   className="hidden"
                   onChange={handleAttachment}
+                  aria-label="Upload image attachments"
                 />
                 <Button
                   size="icon"
@@ -396,6 +409,23 @@ export default function CustomerMessages({ conversationId }: { conversationId?: 
           </div>
         )}
       </div>
+
+      <AlertDialog open={showEndChatDialog} onOpenChange={setShowEndChatDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>End this conversation?</AlertDialogTitle>
+            <AlertDialogDescription>
+              The conversation will be archived and messages will be permanently deleted after 24 hours.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleEndChat} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              End Chat
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
