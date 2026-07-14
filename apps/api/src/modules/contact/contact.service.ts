@@ -20,8 +20,8 @@ export async function submitContact(data: ContactData) {
     logger.info(`Contact form submitted from ${email}`);
     
     return { success: true, message: 'Message sent successfully' };
-  } catch (error) {
-    logger.error('Failed to send contact form email', error);
+  } catch (error: any) {
+    logger.error({ error: error.message }, 'Failed to send contact form email');
     // Don't expose email errors to user, just log them
     return { success: true, message: 'Message sent successfully' };
   }

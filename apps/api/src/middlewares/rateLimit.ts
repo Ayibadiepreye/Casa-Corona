@@ -13,17 +13,92 @@ export const generalLimiter = rateLimit({
 });
 
 /**
- * Tighter limiter for authentication endpoints — 10 attempts / 15 min.
- * Returns a 429 once exceeded.
+ * Login limiter — 10 attempts / 15 min.
+ * Prevents brute force password attacks.
  */
-export const authLimiter = rateLimit({
+export const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
   standardHeaders: true,
   legacyHeaders: false,
-  skipSuccessfulRequests: true, // only count failed logins toward the limit
+  skipSuccessfulRequests: true,
   message: { success: false, error: { code: "RATE_LIMITED", message: "Too many login attempts. Please try again later." } },
 });
+
+/**
+ * Register limiter — 3 accounts / hour per IP.
+ * Prevents spam account creation and automated registration abuse.
+ */
+export const registerLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 3,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: { code: "RATE_LIMITED", message: "Too many signup attempts. Please try again in an hour." } },
+});
+
+/**
+ * Payment limiter — 10 attempts / 15 min.
+ * Prevents payment abuse, card testing, and transaction spam.
+ */
+export const paymentLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: { code: "RATE_LIMITED", message: "Too many payment attempts. Please wait before trying again." } },
+});
+
+/**
+ * Forgot password limiter — 3 requests / hour per IP.
+ * Prevents email bombing and password reset abuse.
+ */
+export const forgotPasswordLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 3,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: { code: "RATE_LIMITED", message: "Too many password reset requests. Please check your email or try again later." } },
+});
+
+/**
+ * OTP send limiter — 3 sends / 15 min per IP.
+ * Protects email quota and prevents OTP spam.
+ */
+export const otpSendLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 3,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: { code: "RATE_LIMITED", message: "Too many OTP requests. Please wait before requesting another code." } },
+});
+
+/**
+ * OTP verify limiter — 5 verification attempts / 15 min.
+ * Prevents OTP brute force guessing.
+ */
+export const otpVerifyLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: { code: "RATE_LIMITED", message: "Too many verification attempts. Please request a new code." } },
+});
+
+/**
+ * Content creation limiter — 10 submissions / hour.
+ * Prevents spam reviews, contact forms, and content abuse.
+ */
+export const contentCreationLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: { code: "RATE_LIMITED", message: "Too many submissions. Please wait before submitting again." } },
+});
+
+// Legacy aliases for backward compatibility
+export const authLimiter = loginLimiter;
 
 /**
  * Per-account lockout. After 5 consecutive failed logins for the SAME email

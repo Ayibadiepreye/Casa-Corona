@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { requireAuth } from "../../middlewares/requireAuth.js";
 import { requireRole } from "../../middlewares/requireRole.js";
+import { contentCreationLimiter } from "../../middlewares/rateLimit.js";
 import { validate } from "../../middlewares/validate.js";
 import * as reviewController from "./review.controller.js";
 import { createReviewSchema, updateReviewSchema, reviewQuerySchema } from "./review.schema.js";
@@ -9,6 +10,7 @@ const router = Router();
 
 router.post(
   "/vendors/:vendorId/reviews",
+  contentCreationLimiter,
   requireAuth,
   requireRole("customer"),
   validate({ body: createReviewSchema }),
@@ -29,6 +31,6 @@ router.patch(
 router.delete("/reviews/:id", requireAuth, reviewController.deleteReview);
 router.post("/reviews/:id/reply", requireAuth, reviewController.replyToReview);
 router.post("/reviews/:id/helpful", requireAuth, reviewController.toggleHelpful);
-router.post("/reviews/:id/report", requireAuth, reviewController.reportReview);
+router.post("/reviews/:id/report", contentCreationLimiter, requireAuth, reviewController.reportReview);
 
 export default router;

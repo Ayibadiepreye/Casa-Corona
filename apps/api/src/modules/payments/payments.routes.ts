@@ -3,6 +3,7 @@ import { logger } from "../../lib/logger.js";
 import { z } from "zod";
 import { requireAuth } from "../../middlewares/requireAuth.js";
 import { requireRole } from "../../middlewares/requireRole.js";
+import { paymentLimiter } from "../../middlewares/rateLimit.js";
 import { ok, badRequest, notFound, forbidden } from "../../lib/response.js";
 import { eq, and, asc, sql } from "drizzle-orm";
 import crypto from "crypto";
@@ -49,7 +50,7 @@ const subscribeSchema = z.object({
   callbackUrl: z.string().url().optional(),
 });
 
-router.post("/subscribe", requireAuth, requireRole("vendor"), async (req, res, next) => {
+router.post("/subscribe", paymentLimiter, requireAuth, requireRole("vendor"), async (req, res, next) => {
   try {
     const { plan, type, callbackUrl } = subscribeSchema.parse(req.body);
     const userId = (req as any).user.userId;
@@ -478,7 +479,7 @@ router.get("/payments", requireAuth, requireRole("admin", "super_admin", "modera
 });
 
 // POST /payments/commission/:id/pay — Initialize Paystack payment for commission invoice
-router.post("/commission/:id/pay", requireAuth, requireRole("vendor"), async (req, res, next) => {
+router.post("/commission/:id/pay", paymentLimiter, requireAuth, requireRole("vendor"), async (req, res, next) => {
   try {
     const paymentId = req.params.id as string;
     const userId = (req as any).user.userId;

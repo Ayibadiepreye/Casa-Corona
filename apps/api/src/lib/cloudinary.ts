@@ -1,16 +1,13 @@
 
 import { v2 as cloudinary } from "cloudinary";
 import { env } from "./env.js";
+import { validateUploadedImage } from "./upload.js";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 function validateFile(file: Express.Multer.File) {
-  if (!file.mimetype.startsWith("image/")) {
-    throw new Error("Only image files are allowed");
-  }
-  if (file.size > MAX_FILE_SIZE) {
-    throw new Error("File size must be less than 5MB");
-  }
+  // Use the secure validation from upload.ts
+  validateUploadedImage(file);
 }
 
 // Stub implementation (dev mode without Cloudinary creds)

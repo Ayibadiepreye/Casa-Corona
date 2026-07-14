@@ -4,6 +4,7 @@ import { ok, created, badRequest } from '../../lib/response.js';
 import { env } from '../../lib/env.js';
 import { AuthRequest } from '../../middlewares/requireAuth.js';
 import { isAccountLocked, recordFailedLogin, clearFailedLogins } from '../../middlewares/rateLimit.js';
+import { setAuthCookies } from '../../lib/jwt.js';
 
 export async function signup(req: Request, res: Response, next: NextFunction) {
   try {
@@ -18,18 +19,7 @@ export async function verifyOtp(req: Request, res: Response, next: NextFunction)
   try {
     const result = await authService.verifyOtp(req.body);
     if ('accessToken' in result && 'refreshToken' in result) {
-      res.cookie('access_token', result.accessToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none',
-        maxAge: 60 * 60 * 1000, // 1h — access token
-      });
-      res.cookie('refresh_token', result.refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none',
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      });
+      setAuthCookies(res, result.accessToken, result.refreshToken);
     }
 
     ok(res, result);
@@ -85,18 +75,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     if ('accessToken' in result && 'refreshToken' in result) {
       // Successful login — clear the failure counter
       await clearFailedLogins(email);
-      res.cookie('access_token', result.accessToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none',
-        maxAge: 60 * 60 * 1000, // 1h — access token
-      });
-      res.cookie('refresh_token', result.refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none',
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      });
+      setAuthCookies(res, result.accessToken, result.refreshToken);
     } else {
       // Soft failure (e.g. requiresVerification) — also count toward the lockout
       const record = await recordFailedLogin(email);
@@ -127,18 +106,7 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
       throw new Error("No refresh token provided");
     }
     const result = await authService.refresh({ refreshToken });
-    res.cookie('access_token', result.accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 60 * 60 * 1000, // 1h — access token
-    });
-    res.cookie('refresh_token', result.refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    });
+    setAuthCookies(res, result.accessToken, result.refreshToken);
     ok(res, result);
   } catch (e) {
     next(e);

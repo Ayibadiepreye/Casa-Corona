@@ -105,6 +105,66 @@ async function request<T>(
   return data.data as T;
 }
 
+/**
+ * Convert API errors to user-friendly messages
+ * Handles common error codes and HTTP status codes
+ */
+export function getUserFriendlyError(error: any): string {
+  // Handle ApiError instances
+  if (error instanceof ApiError) {
+    // Rate limiting
+    if (error.status === 429 || error.code === "RATE_LIMITED") {
+      return "Too many requests. Please wait a moment and try again.";
+    }
+    
+    // Authentication errors
+    if (error.status === 401) {
+      return "Your session has expired. Please log in again.";
+    }
+    
+    if (error.status === 403) {
+      return "You don't have permission to perform this action.";
+    }
+    
+    // Validation errors
+    if (error.status === 400) {
+      // Return the message from backend if it's user-friendly
+      if (error.message && !error.message.includes("Error") && error.message.length < 100) {
+        return error.message;
+      }
+      return "Please check your input and try again.";
+    }
+    
+    // Not found
+    if (error.status === 404) {
+      return "The requested item could not be found.";
+    }
+    
+    // Account locked
+    if (error.code === "ACCOUNT_LOCKED") {
+      return error.message; // Backend provides good message
+    }
+    
+    // Server errors
+    if (error.status >= 500) {
+      return "Something went wrong on our end. Please try again later.";
+    }
+    
+    // Return backend message if it looks user-friendly
+    if (error.message && !error.message.toLowerCase().includes("error") && error.message.length < 150) {
+      return error.message;
+    }
+  }
+  
+  // Network errors
+  if (error.message?.includes("fetch") || error.message?.includes("network")) {
+    return "Connection error. Please check your internet and try again.";
+  }
+  
+  // Fallback
+  return "Something went wrong. Please try again.";
+}
+
 export async function apiGet<T>(path: string, options?: RequestInit): Promise<T> {
   return request<T>(path, { ...options, method: "GET" });
 }

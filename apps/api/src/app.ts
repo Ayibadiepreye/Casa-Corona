@@ -22,15 +22,38 @@ export function createApp(): Express {
     fallthrough: true,
   }));
 
-  // Helmet for security — but disable crossOrigin headers so they don't
-    // interfere with our explicit CORS handling below.
-    app.use(
-      helmet({
-        crossOriginResourcePolicy: false,
-        crossOriginOpenerPolicy: false,
-        crossOriginEmbedderPolicy: false,
-      })
-    );
+  // Helmet for security headers with strict CSP
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'"],
+          styleSrc: ["'self'", "'unsafe-inline'"], // Required for inline styles
+          imgSrc: ["'self'", "data:", "https:", "blob:"], // Allow Cloudinary and data URIs
+          connectSrc: ["'self'", "https://api.paystack.co"], // API connections
+          fontSrc: ["'self'", "data:"],
+          objectSrc: ["'none'"],
+          mediaSrc: ["'self'", "https:"],
+          frameSrc: ["'none'"],
+          baseUri: ["'self'"],
+          formAction: ["'self'"],
+          upgradeInsecureRequests: env.NODE_ENV === "production" ? [] : null,
+        },
+      },
+      crossOriginResourcePolicy: { policy: "cross-origin" }, // Allow Cloudinary resources
+      crossOriginOpenerPolicy: { policy: "same-origin" },
+      crossOriginEmbedderPolicy: false, // Required for external resources
+      hsts: {
+        maxAge: 31536000, // 1 year
+        includeSubDomains: true,
+        preload: true,
+      },
+      noSniff: true,
+      referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+      xssFilter: true,
+    })
+  );
 
     // Disable x-powered-by header
     app.disable("x-powered-by");

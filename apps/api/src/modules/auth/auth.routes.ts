@@ -2,7 +2,14 @@ import { Router } from 'express';
 import * as authController from './auth.controller.js';
 import { validate } from '../../middlewares/validate.js';
 import { requireAuth } from '../../middlewares/requireAuth.js';
-import { authLimiter, generalLimiter } from '../../middlewares/rateLimit.js';
+import { 
+  loginLimiter, 
+  registerLimiter, 
+  forgotPasswordLimiter,
+  otpSendLimiter,
+  otpVerifyLimiter,
+  generalLimiter 
+} from '../../middlewares/rateLimit.js';
 import { env } from '../../lib/env.js';
 import {
   signupSchema,
@@ -16,13 +23,13 @@ import {
 
 const router = Router();
 
-router.post('/signup', validate({ body: signupSchema }), authController.signup);
-router.post('/verify-otp', validate({ body: verifyOtpSchema }), authController.verifyOtp);
-router.post('/resend-otp', validate({ body: resendOtpSchema }), authController.resendOtp);
-router.post('/login', authLimiter, validate({ body: loginSchema }), authController.login);
+router.post('/signup', registerLimiter, validate({ body: signupSchema }), authController.signup);
+router.post('/verify-otp', otpVerifyLimiter, validate({ body: verifyOtpSchema }), authController.verifyOtp);
+router.post('/resend-otp', otpSendLimiter, validate({ body: resendOtpSchema }), authController.resendOtp);
+router.post('/login', loginLimiter, validate({ body: loginSchema }), authController.login);
 // No schema validation — the controller reads from body OR cookie
 router.post('/refresh', authController.refresh);
-router.post('/forgot-password', validate({ body: forgotPasswordSchema }), authController.forgotPassword);
+router.post('/forgot-password', forgotPasswordLimiter, validate({ body: forgotPasswordSchema }), authController.forgotPassword);
 router.post('/reset-password', validate({ body: resetPasswordSchema }), authController.resetPassword);
 router.post('/set-password', requireAuth, authController.setPassword);
 router.post('/logout', requireAuth, authController.logout);
