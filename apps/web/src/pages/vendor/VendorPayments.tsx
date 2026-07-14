@@ -34,9 +34,20 @@ export default function VendorPayments() {
     []
   );
   const { data: vendor, refetch: refetchVendor } = useApi(() => myVendorApi.get(), []);
+  
+  // Fetch featured listing price from platform settings
+  const { data: settingsData } = useApi<any>(
+    () => fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1"}/settings/public`, {
+      credentials: "include"
+    }).then(r => r.json()),
+    []
+  );
 
   const plans: Plan[] = plansData?.plans ?? [];
   const subs: any[] = Array.isArray(subsData) ? subsData : subsData?.subscriptions ?? subsData?.data ?? [];
+  
+  // Get featured listing price from settings (default to 25000 if not available)
+  const featuredPrice = settingsData?.pricing?.featured_slot ?? 25000;
 
   // Handle payment callback from Paystack
   useEffect(() => {
@@ -321,7 +332,7 @@ export default function VendorPayments() {
             <div>
               <h3 className="font-semibold text-lg text-purple-900 dark:text-purple-100 mb-1">Featured Listing Plan</h3>
               <p className="text-sm text-purple-800 dark:text-purple-200 mb-3">Stand out from competitors and get 3x more profile views</p>
-              <p className="text-3xl font-bold text-purple-900 dark:text-purple-100">₦25,000<span className="text-base font-normal text-purple-700 dark:text-purple-300">/month</span></p>
+              <p className="text-3xl font-bold text-purple-900 dark:text-purple-100">{formatNaira(featuredPrice)}<span className="text-base font-normal text-purple-700 dark:text-purple-300">/month</span></p>
             </div>
             <div className="w-16 h-16 rounded-full bg-purple-200 dark:bg-purple-900/50 flex items-center justify-center">
               <Sparkles className="w-8 h-8 text-purple-600" />
