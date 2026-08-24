@@ -24,8 +24,8 @@ export default function AdminBookings() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
 
-  // Fetch all bookings without limit
-  const { data, loading, refetch } = useApi(() => bookingApi.list({ limit: 1000 }));
+  // Fetch bookings (max allowed by API per page is 100)
+  const { data, loading, refetch } = useApi(() => bookingApi.list({ limit: 100 }));
   const bookings: Booking[] = data?.bookings ?? [];
 
   const filtered = bookings.filter(b => {

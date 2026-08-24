@@ -20,7 +20,7 @@ export async function listMyBookings(req: AuthRequest, res: Response, next: Next
   try {
     if (!req.user) throw new Error("User not found");
     const query = bookingQuerySchema.parse(req.query);
-    const result = await bookingService.listMyBookings(req.user.userId, query);
+    const result = await bookingService.listMyBookings(req.user.userId, query, req.user.role);
     ok(res, result);
   } catch (e) {
     next(e);

@@ -181,7 +181,7 @@ export async function deleteReview(userId: string, reviewId: string) {
 
   const [user] = await db.select().from(usersTable).where(eq(usersTable.id, userId));
   const isOwner = review.userId === userId;
-  const isAdmin = user?.role === "admin";
+  const isAdmin = user?.role === "admin" || user?.role === "super_admin" || user?.role === "moderator";
 
   if (!isOwner && !isAdmin) throw new ForbiddenError("Not authorized");
 

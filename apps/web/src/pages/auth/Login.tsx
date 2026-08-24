@@ -42,10 +42,13 @@ export default function Login() {
     setLoading(true);
     try {
       const user = await signIn({ email: values.email, password: values.password });
-      setLoading(false);
-      if (user?.role === "admin") setLocation("/admin");
-      else if (user?.role === "vendor") setLocation("/vendor/dashboard");
-      else setLocation("/account");
+      if (user?.role === "admin" || user?.role === "super_admin" || user?.role === "moderator") {
+        setLocation("/admin");
+      } else if (user?.role === "vendor") {
+        setLocation("/vendor/dashboard");
+      } else {
+        setLocation("/account");
+      }
     } catch (e: any) {
       setLoading(false);
       console.error("Login failed", e);

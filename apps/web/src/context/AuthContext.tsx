@@ -3,7 +3,7 @@ import { authApi, User, SignupData, VerifyOtpData, LoginData } from "../lib/api-
 
 const TOKEN_STORAGE_KEY = "cc_access_token";
 
-export type UserRole = "customer" | "vendor" | "admin";
+export type UserRole = "customer" | "vendor" | "admin" | "super_admin" | "moderator";
 
 interface AuthContextType {
   user: User | null;
@@ -107,7 +107,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [setToken]);
 
   const isAuthenticated = useMemo(() => !!user, [user]);
-  const isAdmin = useMemo(() => user?.role === "admin", [user]);
+  const isAdmin = useMemo(
+    () => user?.role === "admin" || user?.role === "super_admin" || user?.role === "moderator",
+    [user]
+  );
   const isVendor = useMemo(() => user?.role === "vendor", [user]);
   const isCustomer = useMemo(() => user?.role === "customer", [user]);
 

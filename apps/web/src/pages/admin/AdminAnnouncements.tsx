@@ -28,7 +28,10 @@ export default function AdminAnnouncements() {
   useEffect(() => {
     if (audience === "specific") {
       setLoadingUsers(true);
-      fetch(`${API_BASE()}/admin/users?limit=200`, { credentials: "include" })
+      fetch(`${API_BASE()}/admin/users?limit=100`, {
+        credentials: "include",
+        headers: { Authorization: `Bearer ${localStorage.getItem("cc_access_token") || ""}` },
+      })
         .then(r => r.json())
         .then(j => setUserList(j?.data?.users ?? []))
         .catch(() => setUserList([]))

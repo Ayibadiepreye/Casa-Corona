@@ -7,7 +7,13 @@ export function requireRole(...roles: string[]) {
     if (!req.user) {
       throw new ForbiddenError("Not authenticated");
     }
-    if (!roles.includes(req.user.role)) {
+    const userRole = req.user.role;
+    const isSuperAdmin = userRole === "super_admin";
+    const hasRole =
+      roles.includes(userRole) ||
+      (isSuperAdmin && (roles.includes("admin") || roles.includes("moderator")));
+
+    if (!hasRole) {
       throw new ForbiddenError("Insufficient permissions");
     }
     next();

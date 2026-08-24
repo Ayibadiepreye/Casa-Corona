@@ -95,9 +95,11 @@ export async function createBooking(userId: string, data: any) {
   return booking;
 }
 
-export async function listMyBookings(userId: string, query: any) {
+export async function listMyBookings(userId: string, query: any, userRole?: string) {
   const { page, limit, status, type } = query;
   const offset = (page - 1) * limit;
+
+  const isAdmin = userRole === "admin" || userRole === "super_admin" || userRole === "moderator";
 
   // Check if user is vendor
   const [vendor] = await db.select().from(vendorsTable).where(eq(vendorsTable.userId, userId)).limit(1);
@@ -105,7 +107,7 @@ export async function listMyBookings(userId: string, query: any) {
 
   if (vendor) {
     whereConditions.push(eq(bookingsTable.vendorId, vendor.id));
-  } else {
+  } else if (!isAdmin) {
     whereConditions.push(eq(bookingsTable.customerId, userId));
   }
 
@@ -153,7 +155,7 @@ export async function getBookingById(userId: string, bookingId: string) {
   const [user] = await db.select().from(usersTable).where(eq(usersTable.id, userId));
   const [vendor] = await db.select().from(vendorsTable).where(eq(vendorsTable.id, booking.vendorId));
 
-  if (user?.role === "admin") return booking;
+  if (user?.role === "admin" || user?.role === "super_admin" || user?.role === "moderator") return booking;
   if (userId !== booking.customerId && userId !== vendor?.userId) {
     throw new ForbiddenError("Not authorized to view this booking");
   }
@@ -169,7 +171,7 @@ export async function updateBookingStatus(userId: string, bookingId: string, dat
   const [user] = await db.select().from(usersTable).where(eq(usersTable.id, userId));
   const isCustomer = userId === booking.customerId;
   const isVendor = vendor?.userId === userId;
-  const isAdmin = user?.role === "admin";
+  const isAdmin = user?.role === "admin" || user?.role === "super_admin" || user?.role === "moderator";
 
   if (!isCustomer && !isVendor && !isAdmin) throw new ForbiddenError("Not authorized");
 

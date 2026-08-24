@@ -43,7 +43,8 @@ export function Navbar() {
     setLocation("/");
   };
 
-  const dashboardHref = user?.role === "vendor" ? "/vendor/dashboard" : user?.role === "admin" ? "/admin" : "/account";
+  const isPlatformAdmin = user?.role === "admin" || user?.role === "super_admin" || user?.role === "moderator";
+  const dashboardHref = user?.role === "vendor" ? "/vendor/dashboard" : isPlatformAdmin ? "/admin" : "/account";
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
